@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<style>
+@import url(css/sperm.css);
+@import url(css/stack.css);
+@import url(css/d3-tip.css);
+@import url(css/figures.css);
+@import url(css/kbroman_talk.css);
+/* comment following line to get rid of notes; uncommented to show notes */
+/* @import url(css/kbroman_presentation.css); */
+</style>
+
+<script charset="utf-8" type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="js/d3.tip.js"></script>
+
+
+<!-- for the movie -->
+<script src="Movie/scripts/prototype.js" language="JavaScript" type="text/javascript"></script>
+<script src="Movie/scripts/qtp_poster.js" language="JavaScript" type="text/javascript"></script>
+<link href="Movie/stylesheets/qtp_poster.css" rel="StyleSheet" type="text/css" />
+
+
+<title>QTL mapping for phenotypes measured over time</title>
+</head>
+<body class="overview">
+
+
+
+
+
+<section class="titlepage">
+<h2 class="highlight">QTL mapping for phenotypes measured over time</h2>
+
+<h4><a href="http://www.biostat.wisc.edu/~kbroman">Karl Broman</a></h4>
+<p class="nopadding">Biostatistics &amp; Medical Informatics, University of Wisconsin
+&ndash; Madison</p>
+
+<p class="nopadding"><code><a href="http://www.biostat.wisc.edu/~kbroman"
+class="gray">http://www.biostat.wisc.edu/~kbroman</a></code></p>
+
+<p class="codelink"><a href="presentation.html" class="gray">Remove stickies</a>
+
+<aside>
+Click on the link at the bottom-left to remove these
+notes.<br><br>
+
+These slides were tested for Safari on a Mac and might look terrible
+in some browsers.  I have a lot more to learn about handling browser
+differences.
+</aside>
+
+</section>
+
+
+
+<section>
+
+<h3>Inbred mice</h3>
+
+<img style="position:fixed;bottom: 0px; left:0px; z-index: -1;" width="1280px" src="figs/inbredmice.jpg" />
+
+<aside>
+I first need to provide a bit of context.  My research concerns
+genetics, and I focus particularly on mouse genetics.<br><br> I think
+these are <a href="http://jaxmice.jax.org/strain/000689.html">SWR
+mice</a>; the photo is from <a
+href="http://cals.ncsu.edu/genetics/index.php/people/david-threadgill/">David
+Threadgill</a>.
+</aside>
+
+<p class="pg">2</p></section>
+
+
+
+
+
+
+<section>
+
+<h3>Human vs mouse</h3>
+
+<img style="position:fixed;top: 300px; left:120px; z-index: -1;" height="500px" src="figs/da-vinci-man.jpg" />
+
+<img style="position:fixed;top: 300px; right:120px; z-index: -1;" height="500px" src="figs/vitruvian_mouse.jpg" />
+
+<aside>
+Mice are not humans, but you can learn a great deal about human
+biology and disease from mice.<br><br>
+
+The figure on the right is from <a
+href="http://www.daviddeen.com">David Deen</a>.
+</aside>
+
+
+<p class="pg">3</p></section>
+
+
+<section>
+
+<h3>The phenotype</h3>
+
+<div style="position:absolute;top:312px;left:420px;font-size:20px;">
+<a href="Movie/gmovie.mov" rel="qtposter">
+  <img src="Movie/gmovie.jpg" width="440" alt="Phenotype movie"/>
+</a></div>
+
+<p class="pg">4</p></section>
+
+</section>
+
+
+
+
+
+
+<script type="text/javascript" src="js/stack.v0.js"></script>
+</body>
+</html>

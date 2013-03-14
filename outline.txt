@@ -1,0 +1,56 @@
+
+1. Title
+
+2. About me
+
+3. Mice
+
+4. Mouse and human
+
+5. Movie
+
+6. RIL
+
+7. phenotypes, genotypes
+
+8. fancier picture of phenotypes
+
+   - some way to explore them: image linked to curves
+     click to view phenotype
+
+9. QTL analysis of a single phenotype
+
+10. Fancy picture of QTL analysis of a single phenotype
+
+11. Definition of LOD score
+
+12. Methods for dealing with outcomes measured over time
+   - Consider each time point individually
+   - fit model and treat parameters as phenotypes
+   - nonparmetric version; treat coefficients as phenotypes
+
+13. LOD scores for each position with each time point
+
+14. Fancy picture of that
+
+15. Simple methods of combining across time
+
+16. Results
+
+17. Multiple QTL analysis: why?
+    
+18. Broman & Speed for additive QTL
+
+19. Results, considering each time point individually
+
+20. Multiple-QTL analysis, combining across time points
+
+21. Results
+
+22. Summary & Future work
+
+23. Acknowledgments
+
+
+
+
