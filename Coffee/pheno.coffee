@@ -18,6 +18,11 @@ draw = (data) ->
   titlecolor = "Wheat"
   maincolor = "Wheat"
 
+  # rounding functions
+  nodig = d3.format(".0f")
+  onedig = d3.format(".1f")
+  twodig = d3.format(".2f")
+
   # size of data set
   nTimes = data.times.length
   nInd = data.pheno.length
@@ -42,12 +47,17 @@ draw = (data) ->
     return -1 if avePhe[a] < avePhe[b]
     return +1 if avePhe[b] < avePhe[a]
     return 0
+
+  # create index
+  indexInd = orderedInd[0..]
+  for i of orderedInd
+    indexInd[orderedInd[i]] = i
   
   # dimensions of panels
   pixelsPer = 3
   w = nTimes * pixelsPer
-  h = [nInd * pixelsPer, 300]
-  pad = {left:60, top:5, right:5, bottom: 40, inner: 5}
+  h = [nInd * pixelsPer, 200]
+  pad = {left:60, top:15, right:5, bottom: 40, inner: 5}
 
   # total size
   totalw = w + pad.left + pad.right
@@ -77,17 +87,17 @@ draw = (data) ->
   curve.append("rect")
        .attr("height", h[1])
        .attr("width", w)
-       .attr("fill", lightGray)
+       .attr("fill", darkGray)
        .attr("stroke", "none")
        .attr("stroke-width", 1)
 
   # scales for upper panel
   xScaleImg = d3.scale.ordinal()
                 .domain(d3.range(nTimes))
-                .rangePoints([0, pixelsPer*nTimes], 0)
+                .rangePoints([0, pixelsPer*(nTimes-1)+1], 0)
   yScaleImg = d3.scale.ordinal()
                 .domain(d3.range(nInd))
-                .rangePoints([0, pixelsPer*nInd], 0)
+                .rangePoints([0, pixelsPer*(nInd-1)+1], 0)
   zScaleImg = d3.scale.linear() # controls opacity
                 .domain([minPhe, maxPhe])
                 .range([0.001, 0.999])
@@ -95,10 +105,127 @@ draw = (data) ->
   # scales for lower panel
   xScaleCurve = d3.scale.linear()
                   .domain([0, d3.max(data.times)])
-                  .range([pad.inner, w-pad.inner])
+                  .range([pixelsPer/2, w-pixelsPer/2])
   yScaleCurve = d3.scale.linear()
                   .domain([minPhe, maxPhe])
                   .range([h[1]-pad.inner, pad.inner])
+
+  # add axes
+  xTicks = [0..8]
+  topAxes = image.append("g").attr("id", "topAxes").attr("pointer-events", "none")
+  topAxes.selectAll("empty")
+        .data(xTicks)
+        .enter()
+        .append("line")
+        .attr("x1", (d) -> xScaleImg(d*30-1)+pixelsPer/2)
+        .attr("x2", (d) -> xScaleImg(d*30-1)+pixelsPer/2)
+        .attr("y1", h[0])
+        .attr("y2", h[0]+pad.bottom*0.1)
+        .attr("stroke", labelcolor)
+  topAxes.selectAll("empty")
+        .data(xTicks)
+        .enter()
+        .append("text")
+        .text((d) -> d)
+        .attr("x", (d) -> xScaleImg(d*30-1)+pixelsPer/2)
+        .attr("y", h[0]+pad.bottom*0.2)
+        .attr("fill", labelcolor)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "hanging")
+  topAxes.append("text")
+        .attr("x", w/2)
+        .attr("y", h[0] + pad.bottom*0.75)
+        .text("Time (hours)")
+        .attr("fill", titlecolor)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "hanging")
+  topyTicks = [49, 99, 149]
+  topAxes.selectAll("empty")
+        .data(topyTicks)
+        .enter()
+        .append("line")
+        .attr("x1", 0)
+        .attr("x2", -pad.left*0.1)
+        .attr("y1", (d) -> yScaleImg(d))
+        .attr("y2", (d) -> yScaleImg(d))
+        .attr("stroke", labelcolor)
+  topAxes.selectAll("empty")
+        .data(topyTicks)
+        .enter()
+        .append("text")
+        .text((d) -> d*1+1)
+        .attr("x", -pad.left*0.2)
+        .attr("y", (d) -> yScaleImg(d))
+        .attr("fill", labelcolor)
+        .attr("text-anchor", "end")
+        .attr("dominant-baseline", "middle")
+  xloc = -pad.left*0.75
+  yloc = h[0]/2
+  topAxes.append("text")
+        .attr("x", xloc)
+        .attr("y", yloc)
+        .text("Individuals (sorted)")
+        .attr("fill", titlecolor)
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(270,#{xloc},#{yloc})")
+
+  botAxes = curve.append("g").attr("id", "botAxes").attr("pointer-events", "none")
+  botAxes.selectAll("empty")
+        .data(xTicks)
+        .enter()
+        .append("line")
+        .attr("x1", (d) -> xScaleCurve(d*60))
+        .attr("x2", (d) -> xScaleCurve(d*60))
+        .attr("y1", h[1])
+        .attr("y2", 0)
+        .attr("stroke", labelcolor)
+  botAxes.selectAll("empty")
+        .data(xTicks)
+        .enter()
+        .append("text")
+        .text((d) -> d)
+        .attr("x", (d) -> xScaleCurve(d*60))
+        .attr("y", h[1]+pad.bottom*0.1)
+        .attr("fill", labelcolor)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "hanging")
+  botAxes.append("text")
+        .attr("x", w/2)
+        .attr("y", h[1] + pad.bottom*0.65)
+        .text("Time (hours)")
+        .attr("fill", titlecolor)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "hanging")
+  botyTicks = yScaleCurve.ticks(5)
+  botAxes.selectAll("empty")
+        .data(botyTicks)
+        .enter()
+        .append("line")
+        .attr("x1", 0)
+        .attr("x2", w)
+        .attr("y1", (d) -> yScaleCurve(d))
+        .attr("y2", (d) -> yScaleCurve(d))
+        .attr("stroke", labelcolor)
+  botAxes.selectAll("empty")
+        .data(botyTicks)
+        .enter()
+        .append("text")
+        .text((d) -> d)
+        .attr("x", -pad.left*0.1)
+        .attr("y", (d) -> yScaleCurve(d))
+        .attr("fill", labelcolor)
+        .attr("text-anchor", "end")
+        .attr("dominant-baseline", "middle")
+  xloc = -pad.left*0.65
+  yloc = h[1]/2
+  botAxes.append("text")
+        .attr("x", xloc)
+        .attr("y", yloc)
+        .text("Tip Angle")
+        .attr("fill", titlecolor)
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(270,#{xloc},#{yloc})")
+
 
   # the pixels in the upper panel
   imgPixels = image.append("g").attr("id", "imgPixels")
@@ -108,12 +235,13 @@ draw = (data) ->
                  .append("rect")
                  .attr("class", "imgPixels")
                  .attr("x", (d) -> xScaleImg(d.col))
-                 .attr("y", (d) -> yScaleImg(orderedInd[d.row]))
+                 .attr("y", (d) -> yScaleImg(indexInd[d.row]))
                  .attr("height", pixelsPer)
                  .attr("width", pixelsPer)
                  .attr("opacity", (d) -> zScaleImg(d.value))
                  .attr("fill", darkBlue)
                  .attr("stroke", "none")
+                 .attr("stroke-width", 0)
                  .on("mouseover", (d) -> drawCurve(d.row))
 
   # function to draw curve for an individual
@@ -142,10 +270,11 @@ draw = (data) ->
     thecurve.append("text")
           .datum(ind)
           .text("line #{ind*1+1}") # *1 to turn it into a number
-          .attr("x", w - 100)
-          .attr("y", pad.inner*3)
+          .attr("x", xScaleCurve(7*60)+pad.inner)
+          .attr("y", (yScaleCurve(0)+yScaleCurve(-20))/2)
           .attr("text-anchor", "start")
-          .style("color", darkBlue)
+          .attr("fill", darkBlue)
+          .attr("dominant-baseline", "middle")
 
   randomInd = Math.floor(Math.random()*nInd)
   drawCurve(randomInd)
