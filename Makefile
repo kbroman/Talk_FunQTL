@@ -12,13 +12,16 @@ R/out.RData: R/prep_rep1_data.R RawData/rep1_rev.csv
 Data/spalding_pheno.json: R/spal.RData R/phe2json.R
 	cd R;R CMD BATCH phe2json.R
 
-js: JS/pheno.js
+Data/spalding_onetime.json: R/spal.RData R/out.RData R/grab_lod_one_time.R
+	cd R;R CMD BATCH grab_lod_one_time.R
+
+js: JS/pheno.js JS/lod_onetime.js
 
 JS/pheno.js: Coffee/pheno.coffee
 	coffee -bco JS Coffee
 
-#js/manyboxplots.js: coffee/manyboxplots.coffee
-#	coffee -bco js coffee
+JS/lod_onetime.js: Coffee/lod_onetime.coffee
+	coffee -bco JS Coffee
 
 #figs/manyboxplots.png: R/hypo_boxplot.R
 #	cd R;R CMD BATCH hypo_boxplot.R

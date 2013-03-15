@@ -5,3 +5,5 @@ R/spal.RData
 R/out.RData
 Data/spalding_pheno.json
 JS/pheno.js
+JS/lod_onetime.js
+Data/spalding_onetime.json
