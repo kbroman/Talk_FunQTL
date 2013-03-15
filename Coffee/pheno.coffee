@@ -12,7 +12,7 @@ draw = (data) ->
   pink = "hotpink"
   altpink = "#E9CFEC"
   purple = "#8C4374"
-  darkred = "crimson"
+  darkRed = "crimson"
   # bgcolor = "black"
   labelcolor = "white"
   titlecolor = "Wheat"
@@ -227,6 +227,11 @@ draw = (data) ->
         .attr("transform", "rotate(270,#{xloc},#{yloc})")
 
 
+  # keep track of "clicked" status
+  clicked = []
+  for i of orderedInd
+    clicked[i] = false
+
   # the pixels in the upper panel
   imgPixels = image.append("g").attr("id", "imgPixels")
                  .selectAll("rect")
@@ -243,6 +248,13 @@ draw = (data) ->
                  .attr("stroke", "none")
                  .attr("stroke-width", 0)
                  .on("mouseover", (d) -> drawCurve(d.row))
+                 .on("click", (d) -> clickCurve(d.row))
+
+  # phenotype curve for an individual
+  phecurve = (ind) ->
+      d3.svg.line()
+        .x((d) -> xScaleCurve(d))
+        .y((d,di) -> yScaleCurve(data.pheno[ind][di]))
 
   # function to draw curve for an individual
   drawCurve = (ind) ->
@@ -250,12 +262,6 @@ draw = (data) ->
     curInd = ind
 
     d3.select("g#phecurve").remove()
-
-    # phenotype curve for an individual
-    phecurve = (ind) ->
-        d3.svg.line()
-          .x((d) -> xScaleCurve(d))
-          .y((d,di) -> yScaleCurve(data.pheno[ind][di]))
 
     # actually draw the curve
     thecurve = curve.append("g").attr("id", "phecurve")
@@ -275,6 +281,38 @@ draw = (data) ->
           .attr("text-anchor", "start")
           .attr("fill", darkBlue)
           .attr("dominant-baseline", "middle")
+
+  clickColors = ["blue", "red", "green", "orange", "black"]
+
+  # function to draw curve for an individual
+  clickCurve = (ind) ->
+    if clicked[ind]
+      clicked[ind] = false
+      d3.select("g#phecurve_#{ind}").remove()
+      d3.select("rect#pherect_#{ind}").remove()
+    else
+      curcolor = clickColors.shift()
+      clickColors.push(curcolor)
+
+      clicked[ind] = true
+      # actually draw the curve
+      thecurve = curve.append("g").attr("id", "phecurve_#{ind}")
+      thecurve.append("path")
+              .datum(data.times)
+              .attr("d", phecurve(ind))
+              .attr("stroke", curcolor)
+              .attr("fill", "none")
+              .attr("stroke-width", 2)
+
+      image.append("rect").attr("id", "pherect_#{ind}")
+           .attr("x", 0)
+           .attr("width", w)
+           .attr("y", yScaleImg(indexInd[ind])-1)
+           .attr("height", pixelsPer+2)
+           .attr("fill", "none")
+           .attr("stroke", curcolor)
+           .attr("stroke-width", 1)
+           .attr("pointer-events", "none")
 
   randomInd = Math.floor(Math.random()*nInd)
   drawCurve(randomInd)
