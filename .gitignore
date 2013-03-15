@@ -3,6 +3,5 @@ presentation.html
 .Rhistory
 R/spal.RData
 R/out.RData
-JS/pheno.js
-pheno.html
 Data/spalding_pheno.json
+JS/pheno.js
