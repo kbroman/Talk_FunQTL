@@ -265,7 +265,7 @@ draw = (data) ->
 
     # actually draw the curve
     thecurve = curve.append("g").attr("id", "phecurve")
-    thecurve.append("path")
+    thecurve.append("path").attr("id", "phecurve")
           .datum(data.times)
           .attr("d", phecurve(ind))
           .attr("stroke", darkBlue)
@@ -290,7 +290,11 @@ draw = (data) ->
       clicked[ind] = false
       d3.select("g#phecurve_#{ind}").remove()
       d3.select("rect#pherect_#{ind}").remove()
+      drawCurve(ind) # put the darkBlue curve there
+
     else
+      d3.select("path#phecurve").remove() # delete the darkBlue curve (but leave text)
+
       curcolor = clickColors.shift()
       clickColors.push(curcolor)
 
