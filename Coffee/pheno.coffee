@@ -100,7 +100,8 @@ draw = (data) ->
                 .rangePoints([0, pixelsPer*(nInd-1)+1], 0)
   zScaleImg = d3.scale.linear() # controls opacity
                 .domain([minPhe, maxPhe])
-                .range([0.001, 0.999])
+                .range([0.01, 0.99])
+                .clamp(true)
 
   # scales for lower panel
   xScaleCurve = d3.scale.linear()
@@ -243,7 +244,7 @@ draw = (data) ->
                  .attr("y", (d) -> yScaleImg(indexInd[d.row]))
                  .attr("height", pixelsPer)
                  .attr("width", pixelsPer)
-                 .attr("opacity", (d) -> zScaleImg(d.value))
+                 .attr("opacity", (d) -> 1-zScaleImg(d.value))
                  .attr("fill", darkBlue)
                  .attr("stroke", "none")
                  .attr("stroke-width", 0)
