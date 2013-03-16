@@ -268,6 +268,7 @@ draw = (data) ->
       .text((d) -> nodig(d))
       .attr("fill", labelcolor)
       .attr("text-anchor", "end")
+      .attr("dominant-baseline", "middle")
   xloc = left[1]-pad.left*0.7
   yloc = pad.top + h/2
   effaxes.append("text").attr("id", "eff_yaxis_title")
@@ -399,7 +400,7 @@ draw = (data) ->
 
       effpanel.selectAll("line.plotPXG")
           .data(means)
-          .transition().duration(0)
+          .transition().duration(1000)
           .attr("y1", (d) -> effyScale(d))
           .attr("y2", (d) -> effyScale(d))
 
