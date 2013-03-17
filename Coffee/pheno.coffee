@@ -79,7 +79,7 @@ draw = (data) ->
   image.append("rect")
        .attr("height", h[0])
        .attr("width", w)
-       .attr("fill", "white")
+       .attr("fill", "none")
        .attr("stroke", "black")
        .attr("stroke-width", 1)
 
@@ -98,10 +98,25 @@ draw = (data) ->
   yScaleImg = d3.scale.ordinal()
                 .domain(d3.range(nInd))
                 .rangePoints([0, pixelsPer*(nInd-1)+1], 0)
-  zScaleImg = d3.scale.linear() # controls opacity
-                .domain([minPhe, maxPhe])
-                .range([0.01, 0.99])
-                .clamp(true)
+  dif = maxPhe + 45 # center color at -45
+  difdown = -45 - minPhe
+  dif = difdown if dif < difdown
+
+  n_colors = 128
+  colorseq = [0..n_colors]
+  for i of colorseq
+    colorseq[i] /= n_colors
+  console.log(colorseq)
+  redblue = []
+  for i in colorseq
+    redblue.push(d3.interpolateRgb("#b2182b", "#f7f7f7")(i))
+  for i in colorseq[1..]
+    redblue.push(d3.interpolateRgb("#f7f7f7", "#2166ac")(i))
+  console.log(redblue)
+
+  zScaleImg = d3.scale.quantile() # controls opacity
+                .domain([-45 - dif, -45 + dif])
+                .range(redblue)
 
   # scales for lower panel
   xScaleCurve = d3.scale.linear()
@@ -244,8 +259,7 @@ draw = (data) ->
                  .attr("y", (d) -> yScaleImg(indexInd[d.row]))
                  .attr("height", pixelsPer)
                  .attr("width", pixelsPer)
-                 .attr("opacity", (d) -> 1-zScaleImg(d.value))
-                 .attr("fill", darkBlue)
+                 .attr("fill", (d) -> zScaleImg(d.value))
                  .attr("stroke", "none")
                  .attr("stroke-width", 0)
                  .on("mouseover", (d) -> drawCurve(d.row))
