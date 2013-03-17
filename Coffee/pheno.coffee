@@ -57,7 +57,7 @@ draw = (data) ->
   pixelsPer = 3
   w = nTimes * pixelsPer
   h = [nInd * pixelsPer, 200]
-  pad = {left:60, top:15, right:5, bottom: 40, inner: 5}
+  pad = {left:60, top:15, right:25, bottom: 40, inner: 0}
 
   # total size
   totalw = w + pad.left + pad.right
@@ -70,9 +70,9 @@ draw = (data) ->
           .attr("width", totalw)
 
   # groups for the two panels, translated to have origin = (0,0)
-  image = svg.append("g")
+  image = svg.append("g").attr("id", "imagepanel")
              .attr("transform", "translate(#{pad.left},#{pad.top})")
-  curve = svg.append("g")
+  curve = svg.append("g").attr("id", "curvepanel")
              .attr("transform", "translate(#{pad.left},#{pad.top*2+pad.bottom+h[0]})")
                   
   # background rectangle for upper panel
@@ -106,13 +106,11 @@ draw = (data) ->
   colorseq = [0..n_colors]
   for i of colorseq
     colorseq[i] /= n_colors
-  console.log(colorseq)
   redblue = []
   for i in colorseq
     redblue.push(d3.interpolateRgb("#b2182b", "#f7f7f7")(i))
   for i in colorseq[1..]
     redblue.push(d3.interpolateRgb("#f7f7f7", "#2166ac")(i))
-  console.log(redblue)
 
   zScaleImg = d3.scale.quantile() # controls opacity
                 .domain([-45 - dif, -45 + dif])
@@ -260,8 +258,8 @@ draw = (data) ->
                  .attr("height", pixelsPer)
                  .attr("width", pixelsPer)
                  .attr("fill", (d) -> zScaleImg(d.value))
-                 .attr("stroke", "none")
-                 .attr("stroke-width", 0)
+                 .attr("stroke", (d) -> zScaleImg(d.value))
+                 .attr("stroke-width", 0.5)
                  .on("mouseover", (d) -> drawCurve(d.row))
                  .on("click", (d) -> clickCurve(d.row))
 
@@ -330,12 +328,30 @@ draw = (data) ->
            .attr("height", pixelsPer)
            .attr("fill", "none")
            .attr("stroke", curcolor)
-           .attr("stroke-width", 1)
+           .attr("stroke-width", 2)
            .attr("pointer-events", "none")
 
   randomInd = Math.floor(Math.random()*nInd)
   drawCurve(randomInd)
   curInd = randomInd
+
+  # Add color scale below
+  yVals = [0...h[1]]
+  for i of yVals
+    yVals[i] = minPhe + (maxPhe - minPhe) * i / h[1]
+  xPos = w + 10
+  curve.append("g").attr("id", "colorscale")
+       .selectAll("empty")
+       .data(yVals)
+       .enter()
+       .append("rect")
+       .attr("x", xPos)
+       .attr("width", pad.right-10)
+       .attr("y", (d) -> yScaleCurve(d))
+       .attr("height", 1)
+       .attr("fill", (d) -> zScaleImg(d))
+       .attr("stroke", (d) -> zScaleImg(d))
+       .attr("stroke-width", 0.5)
 
 # load json file and call draw function
 d3.json("Data/spalding_pheno.json", draw)
