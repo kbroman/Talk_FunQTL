@@ -38,20 +38,20 @@ draw = (data) ->
     for pmark of data.map[chr]
       pmarkChr[pmark] = chr
 
+  minLodShown = 0.01dm
+
   # list version of LOD scores for heatmap
   lodList = []
   for p,pind in data.evenpmar
     i = data.evenpmarindex[p]
     for j of data.times
+      if data.lod[i][j] > minLodShown
         lodList.push({pmar: p,
-        row: j,
-        col: pind,
+        row: j*1,
+        col: pind*1 + pmarkChr[p]*1 - 1,
         value: data.lod[i][j]})
+  console.log("No. pixels = #{lodList.length}")
       
-  console.log(lodList.length)
-  console.log(lodList[3000])
-  
-
   # dimensions
   pixelPer = 2
   totalpmar = data.evenpmar.length
@@ -113,9 +113,11 @@ draw = (data) ->
       minEff = e  if minEff > e
       maxEff = e  if maxEff < e
   maxLod = -1
+  minLod = 50
   for i of data.lod
     for j of data.lod[i]
       maxLod = data.lod[i][j] if maxLod < data.lod[i][j]
+      minLod = data.lod[i][j] if minLod > data.lod[i][j]
 
   # scales
   effYscale = d3.scale.linear()
@@ -138,8 +140,9 @@ draw = (data) ->
                 .rangePoints([0, imgw-pixelPer], 0)
 
   imgZscale = d3.scale.linear()
-                .domain([0, maxLod])
+                .domain([minLodShown, maxLod])
                 .range([0, 1])
+                .clamp(true)
 
   panels[0].append("g").attr("id", "imagerect")
            .selectAll("empty")
