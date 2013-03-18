@@ -15,12 +15,15 @@ Data/spalding_pheno.json: R/spal.RData R/phe2json.R
 Data/spalding_onetime.json: R/spal.RData R/out.RData R/grab_lod_one_time.R
 	cd R;R CMD BATCH grab_lod_one_time.R
 
-js: JS/pheno.js JS/lod_onetime.js
+js: JS/pheno.js JS/lod_onetime.js JS/lod_alltimes.js
 
 JS/pheno.js: Coffee/pheno.coffee
 	coffee -bco JS Coffee
 
 JS/lod_onetime.js: Coffee/lod_onetime.coffee
+	coffee -bco JS Coffee
+
+JS/lod_alltimes.js: Coffee/lod_alltimes.coffee
 	coffee -bco JS Coffee
 
 #figs/manyboxplots.png: R/hypo_boxplot.R
