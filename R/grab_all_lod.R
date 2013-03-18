@@ -24,10 +24,13 @@ for(i in seq(along=map)) {
 }
 
 # pseudomarker indices, for even spacing (every cM)
-evenpmarindex <- lapply(outspl, function(a) a[match(seq(0, max(a[,2]), by=1), a[,2]),ncol(a),drop=FALSE])
+tmp <- split(cbind(as.data.frame(out[,1:2]), (1:nrow(out))-1), out[,1])
+evenpmarindex <- lapply(tmp, function(a) a[match(seq(0, max(a[,2]), by=1), a[,2]),ncol(a),drop=FALSE])
 evenpmarindex <- lapply(evenpmarindex, function(a) { b <- unlist(a); names(b) <- rownames(a); b})
 evenpmar <- unlist(lapply(evenpmarindex, names))
 names(evenpmar) <- NULL
+evenpmarindex <- unlist(evenpmarindex)
+names(evenpmarindex) <- evenpmar
 
 # imputed genotypes at evenly spaced pseudomarkers
 gi <- pull.draws(sim.geno(spal, err=0.002, map.function="kosambi", n.draws=1, step=1))[,unlist(evenpmarindex)+1,1]
