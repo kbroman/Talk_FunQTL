@@ -5,6 +5,8 @@
 # function that does all of the work
 draw = (data) ->
 
+  d3.select("p#loading").remove()
+
   # colors
   darkBlue = "darkslateblue"
   lightGray = d3.rgb(230, 230, 230)
@@ -32,17 +34,24 @@ draw = (data) ->
 
   # hash: pmarker -> chrindex
   pmarkChr = {}
-  for chr,i in data.chr
+  for chr in data.chr
     for pmark of data.map[chr]
-      pmarkChr[pmark] = i
+      pmarkChr[pmark] = chr
 
   # list version of LOD scores for heatmap
-  lod = []
-  for p of data.evenpmar
-    for i of data.times
-      lod.push({pmar: data.evenpmar[p], row: i,
-      col: p+pmarkChr[p], value: data.lod[p][i]})
+  lodList = []
+  for p,pind in data.evenpmar
+    i = data.evenpmarindex[p]
+    for j of data.times
+        lodList.push({pmar: p,
+        row: j,
+        col: pind,
+        value: data.lod[i][j]})
       
+  console.log(lodList.length)
+  console.log(lodList[3000])
+  
+
   # dimensions
   pixelPer = 2
   totalpmar = data.evenpmar.length
@@ -83,7 +92,7 @@ draw = (data) ->
     panels[i].append("rect")
              .attr("height", h[i])
              .attr("width", w[i])
-             .attr("fill",  darkGray)
+             .attr("fill",  "white")
              .attr("stroke", "black")
              .attr("stroke-width", 2)
 
@@ -111,18 +120,40 @@ draw = (data) ->
   # scales
   effYscale = d3.scale.linear()
                 .domain([minEff, maxEff])
-                .range([h[3] - pad.inner, pad.inner])
+                .range([effh - pad.inner, pad.inner])
   pheYscale = d3.scale.linear()
                 .domain([minPhe, maxPhe])
-                .range([h[2] - pad.inner, pad.inner])
+                .range([effh - pad.inner, pad.inner])
 
   lodYscale = d3.scale.linear()
                 .domain([0, maxLod])
-                .range([h[1] - pad.inner, pad.inner])
+                .range([lodh - pad.inner, pad.inner])
 
   imgYscale = d3.scale.ordinal()
                 .domain(d3.range(data.times.length))
-                .rangePoints([0, pixelPer*(data.times.length-1)+1], 0)
+                .rangePoints([0, imgh-pixelPer], 0)
+
+  imgXscale = d3.scale.ordinal()
+                .domain(d3.range(imgw/pixelPer))
+                .rangePoints([0, imgw-pixelPer], 0)
+
+  imgZscale = d3.scale.linear()
+                .domain([0, maxLod])
+                .range([0, 1])
+
+  panels[0].append("g").attr("id", "imagerect")
+           .selectAll("empty")
+           .data(lodList)
+           .enter()
+           .append("rect")
+           .attr("x", (d) -> imgXscale(d.col))
+           .attr("width", pixelPer)
+           .attr("y", (d) -> imgYscale(d.row))
+           .attr("height", pixelPer)
+           .attr("fill", darkBlue)
+           .attr("stroke", darkBlue)
+           .attr("stroke-width", 0.5)
+           .attr("opacity", (d) -> imgZscale(d.value))
 
 
 # load json file and call draw function
