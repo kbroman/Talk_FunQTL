@@ -77,7 +77,7 @@ draw = (data) ->
   for chr in data.chr
     chrStartPixel[chr] = curPixel
     chrEndPixel[chr] = curPixel + (chrEnd[chr] - chrStart[chr])*pixelPer
-    curPixel = chrEndPixel[chr]+pixelPer
+    curPixel = chrEndPixel[chr]+pixelPer*2
     imgXscale[chr] = d3.scale.linear()
                        .domain([chrStart[chr], chrEnd[chr]])
                        .range([chrStartPixel[chr], chrEndPixel[chr]])
