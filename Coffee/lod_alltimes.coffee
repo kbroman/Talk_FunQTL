@@ -7,6 +7,9 @@ draw = (data) ->
 
   d3.select("p#loading").remove()
 
+  # no. pixels per rectangle in heatmap
+  pixelPer = 2
+
   # colors
   darkBlue = "darkslateblue"
   lightGray = d3.rgb(230, 230, 230)
@@ -33,28 +36,56 @@ draw = (data) ->
       eff[i][j] = data.ave2[i][j] - data.ave1[i][j]
 
   # hash: pmarker -> chrindex
-  pmarkChr = {}
+  pmarChr = {}
   for chr in data.chr
-    for pmark of data.map[chr]
-      pmarkChr[pmark] = chr
+    for p of data.map[chr]
+      pmarChr[p] = chr
 
   minLodShown = 1
+
+  # to contain the start and end positions
+  chrStart = {}
+  chrEnd = {}
+  chrStartPixel = {}
+  chrEndPixel = {}
+  for chr in data.chr
+    chrStart[chr] = 999
+    chrEnd[chr] = -999
 
   # list version of LOD scores for heatmap
   lodList = []
   for p,pind in data.evenpmar
     i = data.evenpmarindex[p]
     for j of data.times
+      chr = pmarChr[p]
+      pos = data.map[chr][p]
+      chrStart[chr] = pos if chrStart[chr] > pos
+      chrEnd[chr] = pos if chrEnd[chr] < pos
       if data.lod[i][j] > minLodShown
         lodList.push({pmar: p,
-        row: j*1,
+        row: j*1, # the *1 is to deal with character strings
         effindex: pind,
-        col: pind*1 + pmarkChr[p]*1 - 1,
+        chr: pmarChr[p],
+        xpos: pos,
         value: data.lod[i][j]})
   console.log("No. pixels = #{lodList.length}")
       
+  # create X scale for image and LOD curves
+  curPixel = 0
+  imgXscale = {}
+  lodXscale = {}
+  for chr in data.chr
+    chrStartPixel[chr] = curPixel
+    chrEndPixel[chr] = curPixel + (chrEnd[chr] - chrStart[chr])*pixelPer
+    curPixel = chrEndPixel[chr]+pixelPer
+    imgXscale[chr] = d3.scale.linear()
+                       .domain([chrStart[chr], chrEnd[chr]])
+                       .range([chrStartPixel[chr], chrEndPixel[chr]])
+    lodXscale[chr] = d3.scale.linear()
+                       .domain([chrStart[chr], chrEnd[chr]])
+                       .range([chrStartPixel[chr]+pixelPer/2, chrEndPixel[chr]*pixelPer/2])
+
   # dimensions
-  pixelPer = 2
   totalpmar = data.evenpmar.length
   pad = {left:60, top:25, right:25, bottom: 60, inner: 2}
   imgw = pixelPer * (totalpmar + data.chr.length-1)
@@ -136,21 +167,21 @@ draw = (data) ->
                 .domain(d3.range(data.times.length))
                 .rangePoints([0, imgh-pixelPer], 0)
 
-  imgXscale = d3.scale.ordinal()
-                .domain(d3.range(imgw/pixelPer))
-                .rangePoints([0, imgw-pixelPer], 0)
-
   imgZscale = d3.scale.linear()
                 .domain([minLodShown, maxLod])
                 .range([0, 1])
                 .clamp(true)
+
+  effXscale = d3.scale.linear()
+                .domain([d3.min(data.times), d3.max(data.times)])
+                .range([pad.inner, w[2]-pad.inner])
 
   panels[0].append("g").attr("id", "imagerect")
            .selectAll("empty")
            .data(lodList)
            .enter()
            .append("rect")
-           .attr("x", (d) -> imgXscale(d.col))
+           .attr("x", (d) -> imgXscale[d.chr](d.xpos))
            .attr("width", pixelPer)
            .attr("y", (d) -> imgYscale(d.row))
            .attr("height", pixelPer)
@@ -164,6 +195,24 @@ draw = (data) ->
                darkRed)
            .attr("stroke-width", 0.5)
            .attr("opacity", (d) -> imgZscale(d.value))
+
+  # black vertical lines at chromosome boundaries
+  boundaries = []
+  for chr in data.chr[1..]
+    boundaries.push(chrStartPixel[chr])
+
+  panels[0].append("g").attr("id", "chrBoundaryLines")
+           .selectAll("empty")
+           .data(boundaries)
+           .enter()
+           .append("line")
+           .attr("y1", 0)
+           .attr("y2", h[0])
+           .attr("x1", (d) -> d-pixelPer*0.5)
+           .attr("x2", (d) -> d-pixelPer*0.5)
+           .attr("fill", "none")
+           .attr("stroke", "black")
+           .attr("stroke-width", 1)
 
 
 # load json file and call draw function
