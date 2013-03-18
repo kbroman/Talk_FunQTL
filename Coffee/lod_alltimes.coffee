@@ -38,7 +38,7 @@ draw = (data) ->
     for pmark of data.map[chr]
       pmarkChr[pmark] = chr
 
-  minLodShown = 0.05
+  minLodShown = 1
 
   # list version of LOD scores for heatmap
   lodList = []
@@ -48,6 +48,7 @@ draw = (data) ->
       if data.lod[i][j] > minLodShown
         lodList.push({pmar: p,
         row: j*1,
+        effindex: pind,
         col: pind*1 + pmarkChr[p]*1 - 1,
         value: data.lod[i][j]})
   console.log("No. pixels = #{lodList.length}")
@@ -153,8 +154,14 @@ draw = (data) ->
            .attr("width", pixelPer)
            .attr("y", (d) -> imgYscale(d.row))
            .attr("height", pixelPer)
-           .attr("fill", darkBlue)
-           .attr("stroke", darkBlue)
+           .attr("fill", (d) ->
+               if eff[d.effindex][d.row] < 0
+                 return darkBlue
+               darkRed)
+           .attr("stroke",  (d) ->
+               if eff[d.effindex][d.row] < 0
+                 return darkBlue
+               darkRed)
            .attr("stroke-width", 0.5)
            .attr("opacity", (d) -> imgZscale(d.value))
 
