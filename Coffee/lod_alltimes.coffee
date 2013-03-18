@@ -38,7 +38,7 @@ draw = (data) ->
     for pmark of data.map[chr]
       pmarkChr[pmark] = chr
 
-  minLodShown = 0.01dm
+  minLodShown = 0.05
 
   # list version of LOD scores for heatmap
   lodList = []
