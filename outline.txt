@@ -18,11 +18,11 @@
    - some way to explore them: image linked to curves
      click to view phenotype
 
-9. QTL analysis of a single phenotype
+9. Fancy picture of QTL analysis of a single phenotype
 
-10. Fancy picture of QTL analysis of a single phenotype
+10. Definition of LOD score
 
-11. Definition of LOD score
+11. Illustration of permutation test
 
 12. Methods for dealing with outcomes measured over time
    - Consider each time point individually
@@ -31,7 +31,7 @@
 
 13. LOD scores for each position with each time point
 
-14. Fancy picture of that
+14. Fancy picture of that  (or maybe *just* do the fancy version?)
 
 15. Simple methods of combining across time
 
