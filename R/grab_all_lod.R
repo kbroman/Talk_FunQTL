@@ -7,6 +7,7 @@ library(qtl)
 
 # load phenotype and genotype data
 load("spal.RData")
+
 # load scanone results, each time point considered individually
 load("out.RData")
 
@@ -57,5 +58,5 @@ cat0a("\"evenpmarindex\" :\n", toJSON(evenpmarindex), ",\n\n")
 cat0a("\"times\" :\n", toJSON(times), ",\n\n")
 cat0a("\"lod\" :\n", toJSON(lod), ",\n\n")
 cat0a("\"ave1\" :\n", toJSON(ave1), ",\n\n")
-cat0a("\"ave2\" :\n", toJSON(ave2), ",\n\n")
+cat0a("\"ave2\" :\n", toJSON(ave2), "\n\n")
 cat0a("}\n")
