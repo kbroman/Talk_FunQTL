@@ -69,7 +69,7 @@ draw = (data) ->
         xpos: pos,
         value: data.lod[i][j]})
   console.log("No. pixels = #{lodList.length}")
-      
+
   # create X scale for image and LOD curves
   curPixel = 0
   imgXscale = {}
@@ -119,7 +119,7 @@ draw = (data) ->
   for i in [0...4]
     panels[i] = svg.append("g").attr("id", panelnames[i])
                    .attr("transform", "translate(#{left[i]}, #{top[i]})")
-    
+
   # rectangles
   for i of panels
     panels[i].append("rect")
@@ -172,7 +172,7 @@ draw = (data) ->
   imgYscale = d3.scale.ordinal()
                 .domain(d3.range(data.times.length))
                 .rangePoints([imgh-pixelPer, 0], 0)
-                  
+
 
   imgZscale = d3.scale.linear()
                 .domain([minLodShown, maxLod])
@@ -230,7 +230,7 @@ draw = (data) ->
              .attr("y", h[i]+pad.bottom)
              .attr("fill", titlecolor)
              .attr("text-anchor", "middle")
-    
+
 
   # chromosome IDs on X axis
   for i in [0..1]
@@ -370,7 +370,7 @@ draw = (data) ->
            .on("mouseover", (d) -> effPlot(d.effindex))
            .on("mouseout", ->
                  panels[3].selectAll("path#effCurve").remove())
-          
+
 
 
 # load json file and call draw function
