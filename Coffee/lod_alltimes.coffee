@@ -325,6 +325,28 @@ draw = (data) ->
              .attr("fill", titlecolor)
 
 
+  # plot phenotype curves
+  phePlot = (d) ->
+    d
+
+  # plot effect curve
+  effCurve = (pmari) ->
+     d3.svg.line()
+       .x((t) -> effXscale(t))
+       .y((t,i) -> effYscale(eff[pmari][i]))
+
+  effPlot = (pmari) ->
+    panels[3].append("path").attr("id", "effCurve")
+             .datum(data.times)
+             .attr("d", effCurve(pmari))
+             .attr("stroke", darkBlue)
+             .attr("fill", "none")
+             .attr("stroke-width", "2")
+
+  # plot lod curves
+  lodPlot = (d) ->
+    d
+
   # image plot
   panels[0].append("g").attr("id", "imagerect")
            .selectAll("empty")
@@ -345,7 +367,10 @@ draw = (data) ->
                darkRed)
            .attr("stroke-width", 0)
            .attr("opacity", (d) -> imgZscale(d.value))
-
+           .on("mouseover", (d) -> effPlot(d.effindex))
+           .on("mouseout", ->
+                 panels[3].selectAll("path#effCurve").remove())
+          
 
 
 # load json file and call draw function
