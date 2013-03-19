@@ -8,7 +8,7 @@ draw = (data) ->
   d3.select("p#loading").remove()
 
   # no. pixels per rectangle in heatmap
-  pixelPer = 2
+  pixelPer = 1.5 # <- I wanted this to be an integer, but I couldn't fit the figure into a talk
 
   # colors
   darkBlue = "darkslateblue"
@@ -87,7 +87,7 @@ draw = (data) ->
 
   # dimensions
   totalpmar = data.evenpmar.length
-  pad = {left:60, top:25, right:25, bottom: 60, inner: 2}
+  pad = {left:50, top:20, right:10, bottom: 30, inner: 2}
   imgw = pixelPer * (totalpmar + data.chr.length-1)
   imgh = pixelPer * data.times.length
   lodh = 225
@@ -105,6 +105,7 @@ draw = (data) ->
 
   totalh = h[0] + h[1] + (pad.top + pad.bottom)*2
   totalw = (w[0] + w[2]) + (pad.left + pad.right)*2
+  console.log("width = #{totalw}, height = #{totalh}")
 
   # create svg
   svg = d3.select("div#lod_alltimes_fig")
@@ -219,14 +220,14 @@ draw = (data) ->
              .enter()
              .append("text")
              .text((d) -> d)
-             .attr("y", h[i] + pad.bottom*0.3)
+             .attr("y", h[i] + pad.bottom*0.5)
              .attr("x", (d) -> effXscale(d*60))
              .attr("fill", labelcolor)
              .attr("text-anchor", "middle")
     panels[i].append("text")
              .text("Time (hours)")
              .attr("x", w[i]/2)
-             .attr("y", h[i]+pad.bottom*0.65)
+             .attr("y", h[i]+pad.bottom)
              .attr("fill", titlecolor)
              .attr("text-anchor", "middle")
     
@@ -238,7 +239,7 @@ draw = (data) ->
              .data(data.chr)
              .enter()
              .append("text")
-             .attr("y", h[i]+pad.bottom*0.3)
+             .attr("y", h[i]+pad.bottom*0.42)
              .attr("x", (d) -> (chrStartPixel[d]+chrEndPixel[d])/2)
              .text((d) -> d)
              .attr("fill", labelcolor)
@@ -248,7 +249,7 @@ draw = (data) ->
              .attr("fill", titlecolor)
              .attr("text-anchor", "middle")
              .attr("x", w[i]/2)
-             .attr("y", h[i]+pad.bottom*0.6)
+             .attr("y", h[i]+pad.bottom*0.9)
 
   # y-axis labels
   panels[0].append("g").attr("id", "imgYaxisLabels")
@@ -287,7 +288,7 @@ draw = (data) ->
           pheYscale.ticks(6), effYscale.ticks(6)]
   scale = [null, lodYscale, pheYscale, effYscale]
   ytitle = [null, "LOD score", "Ave phenotype", "QTL effect"]
-  mult = [null, 0.6, 0.7, 0.7]
+  mult = [null, 0.6, 0.8, 0.7]
   for i in [1..3]
     panels[i].selectAll("empty")
              .data(ticks[i])
