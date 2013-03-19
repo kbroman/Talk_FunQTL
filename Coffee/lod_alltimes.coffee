@@ -41,7 +41,7 @@ draw = (data) ->
     for p of data.map[chr]
       pmarChr[p] = chr
 
-  minLodShown = 1
+  minLodShown = 0.5
 
   # to contain the start and end positions
   chrStart = {}
@@ -287,7 +287,7 @@ draw = (data) ->
   ticks = [null, lodYscale.ticks(5),
           pheYscale.ticks(6), effYscale.ticks(6)]
   scale = [null, lodYscale, pheYscale, effYscale]
-  ytitle = [null, "LOD score", "Ave phenotype", "QTL effect"]
+  ytitle = [null, "LOD score", "Ave phenotype", "QTL effect (BB - AA)"]
   mult = [null, 0.6, 0.8, 0.7]
   for i in [1..3]
     panels[i].selectAll("empty")
@@ -360,6 +360,16 @@ draw = (data) ->
                    darkRed)
                .attr("fill", "none")
                .attr("stroke-width", "2")
+    pmar = data.evenpmar[pmari]
+    chr = pmarChr[pmar]
+    pos = data.map[chr][pmar]
+    panels[2].append("text").attr("id", "pheTitle")
+             .text("Chr #{chr} @ #{nodig(pos)} cM")
+             .attr("x", w[2]/2)
+             .attr("y", -pad.top*0.6)
+             .attr("text-anchor", "middle")
+             .attr("dominant-baseline", "middle")
+             .attr("fill", maincolor)
 
   # effect curve function
   effCurve = (pmari) ->
@@ -376,6 +386,7 @@ draw = (data) ->
              .attr("fill", "none")
              .attr("stroke-width", "2")
 
+
   # lod curve function
   lodCurve = (time, chr) ->
     d3.svg.line()
@@ -384,6 +395,18 @@ draw = (data) ->
 
   # plot LOD curves
   lodPlot = (time) ->
+    # convert time into hour:min
+    retime = Math.floor(time*2/60) + Math.round(time*2 % 60)/100
+    retime = twodig(retime)
+    retime = retime.replace(/\./, ":")
+    panels[1].append("text").attr("id", "lodTitle")
+             .text("time = #{retime}")
+             .attr("x", chrStartPixel["5"] + (chrEndPixel["5"]-chrStartPixel["5"])*0.1)
+             .attr("y", lodYscale(5.5))
+             .attr("fill", darkBlue)
+             .attr("text-anchor", "start")
+             .attr("dominant-baseline", "middle")
+    # LOD curves
     for chr in data.chr
       panels[1].append("path").attr("class", "lodCurve")
                .datum(data.allpmar[chr])
@@ -417,7 +440,9 @@ draw = (data) ->
            .on("mouseout", ->
                  panels[3].selectAll("path#effCurve").remove()
                  panels[2].selectAll("path.pheCurve").remove()
-                 panels[1].selectAll("path.lodCurve").remove())
+                 panels[2].selectAll("text#pheTitle").remove()
+                 panels[1].selectAll("path.lodCurve").remove()
+                 panels[1].selectAll("text#lodTitle").remove())
 
 
 
