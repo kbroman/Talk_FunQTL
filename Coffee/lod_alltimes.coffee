@@ -41,7 +41,7 @@ draw = (data) ->
     for p of data.map[chr]
       pmarChr[p] = chr
 
-  minLodShown = 1
+  minLodShown = 4
 
   # to contain the start and end positions
   chrStart = {}
@@ -55,7 +55,7 @@ draw = (data) ->
   # list version of LOD scores for heatmap
   lodList = []
   for p,pind in data.evenpmar
-    i = data.evenpmarindex[p]
+    i = data.pmarindex[p]
     for j of data.times
       chr = pmarChr[p]
       pos = data.map[chr][p]
@@ -83,7 +83,7 @@ draw = (data) ->
                        .range([chrStartPixel[chr], chrEndPixel[chr]])
     lodXscale[chr] = d3.scale.linear()
                        .domain([chrStart[chr], chrEnd[chr]])
-                       .range([chrStartPixel[chr]+pixelPer/2, chrEndPixel[chr]*pixelPer/2])
+                       .range([chrStartPixel[chr]+pixelPer/2, chrEndPixel[chr]+pixelPer/2])
 
   # dimensions
   totalpmar = data.evenpmar.length
@@ -376,9 +376,21 @@ draw = (data) ->
              .attr("fill", "none")
              .attr("stroke-width", "2")
 
-  # plot lod curves
-  lodPlot = (d) ->
-    d
+  # lod curve function
+  lodCurve = (time, chr) ->
+    d3.svg.line()
+      .x((pmar) -> lodXscale[chr](data.map[chr][pmar]))
+      .y((pmar) -> lodYscale(data.lod[data.pmarindex[pmar]][time]))
+
+  # plot LOD curves
+  lodPlot = (time) ->
+    for chr in data.chr
+      panels[1].append("path").attr("class", "lodCurve")
+               .datum(data.allpmar[chr])
+               .attr("d", lodCurve(time, chr))
+               .attr("stroke", darkBlue)
+               .attr("fill", "none")
+               .attr("stroke-width", "2")
 
   # image plot
   panels[0].append("g").attr("id", "imagerect")
@@ -400,10 +412,12 @@ draw = (data) ->
            .attr("opacity", (d) -> imgZscale(d.value))
            .on("mouseover", (d) ->
                effPlot(d.effindex)
-               phePlot(d.effindex))
+               phePlot(d.effindex)
+               lodPlot(d.row))
            .on("mouseout", ->
                  panels[3].selectAll("path#effCurve").remove()
-                 panels[2].selectAll("path.pheCurve").remove())
+                 panels[2].selectAll("path.pheCurve").remove()
+                 panels[1].selectAll("path.lodCurve").remove())
 
 
 
