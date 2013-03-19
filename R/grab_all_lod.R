@@ -32,6 +32,8 @@ names(evenpmar) <- NULL
 evenpmarindex <- unlist(evenpmarindex)
 names(evenpmarindex) <- evenpmar
 
+
+
 # imputed genotypes at evenly spaced pseudomarkers
 gi <- pull.draws(sim.geno(spal, err=0.002, map.function="kosambi", n.draws=1, step=1))[,unlist(evenpmarindex)+1,1]
 
@@ -56,6 +58,7 @@ cat0a <- function(...) cat(..., sep="", file="../Data/spalding_all_lod.json", ap
 cat0("{\n")
 cat0a("\"chr\" :\n", toJSON(chrnames(spal)), ",\n\n")
 cat0a("\"map\" :\n", toJSON(map, digits=10), ",\n\n")
+cat0a("\"allpmar\" :\n", toJSON(lapply(map, names)), ",\n\n")
 cat0a("\"evenpmar\" :\n", toJSON(evenpmar), ",\n\n")
 cat0a("\"evenpmarindex\" :\n", toJSON(evenpmarindex), ",\n\n")
 cat0a("\"times\" :\n", toJSON(times), ",\n\n")
