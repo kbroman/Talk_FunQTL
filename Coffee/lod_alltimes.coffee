@@ -175,7 +175,7 @@ draw = (data) ->
 
 
   imgZscale = d3.scale.linear()
-                .domain([minLodShown, maxLod])
+                .domain([0, maxLod])
                 .range([0, 1])
                 .clamp(true)
 
@@ -224,12 +224,13 @@ draw = (data) ->
              .attr("x", (d) -> effXscale(d*60))
              .attr("fill", labelcolor)
              .attr("text-anchor", "middle")
-    panels[i].append("text")
-             .text("Time (hours)")
-             .attr("x", w[i]/2)
-             .attr("y", h[i]+pad.bottom)
-             .attr("fill", titlecolor)
-             .attr("text-anchor", "middle")
+  # "Time (hours)" just at bottom
+  panels[3].append("text")
+           .text("Time (hours)")
+           .attr("x", w[3]/2)
+           .attr("y", h[3]+pad.bottom)
+           .attr("fill", titlecolor)
+           .attr("text-anchor", "middle")
 
 
   # chromosome IDs on X axis
@@ -244,12 +245,13 @@ draw = (data) ->
              .text((d) -> d)
              .attr("fill", labelcolor)
              .attr("text-anchor", "middle")
-    panels[i].append("text")
-             .text("Chromosome")
-             .attr("fill", titlecolor)
-             .attr("text-anchor", "middle")
-             .attr("x", w[i]/2)
-             .attr("y", h[i]+pad.bottom*0.9)
+  # "Chromosome" just at bottom
+  panels[1].append("text")
+           .text("Chromosome") 
+           .attr("fill", titlecolor)
+           .attr("text-anchor", "middle")
+           .attr("x", w[1]/2)
+           .attr("y", h[1]+pad.bottom*0.9)
 
   # y-axis labels
   panels[0].append("g").attr("id", "imgYaxisLabels")
