@@ -355,7 +355,7 @@ draw = (data) ->
   # plot phenotype curves
   phePlot = (pmari) ->
     for g in [1..2]
-      panels[2].append("path").attr("class", "pheCurve")
+      panels[2].append("path").attr("id", "pheCurve#{g}")
                .datum(data.times)
                .attr("d", pheCurve(pmari, g))
                .attr("stroke", ->
@@ -402,7 +402,6 @@ draw = (data) ->
              .attr("fill", "none")
              .attr("stroke-width", "2")
 
-
   # lod curve function
   lodCurve = (time, chr) ->
     d3.svg.line()
@@ -424,7 +423,7 @@ draw = (data) ->
              .attr("dominant-baseline", "middle")
     # LOD curves
     for chr in data.chr
-      panels[1].append("path").attr("class", "lodCurve")
+      panels[1].append("path").attr("id", "lodCurve#{chr}")
                .datum(data.allpmar[chr])
                .attr("d", lodCurve(time, chr))
                .attr("stroke", darkBlue)
@@ -454,12 +453,14 @@ draw = (data) ->
                phePlot(d.effindex)
                lodPlot(d.row))
            .on("mouseout", ->
-                 panels[3].selectAll("path#effCurve").remove()
-                 panels[3].selectAll("path#seArea").remove()
-                 panels[2].selectAll("path.pheCurve").remove()
-                 panels[2].selectAll("text#pheTitle").remove()
-                 panels[1].selectAll("path.lodCurve").remove()
-                 panels[1].selectAll("text#lodTitle").remove())
+                 panels[3].select("path#effCurve").remove()
+                 panels[3].select("path#seArea").remove()
+                 for g in [1..2]
+                   panels[2].select("path#pheCurve#{g}").remove()
+                 panels[2].select("text#pheTitle").remove()
+                 for chr in data.chr
+                   panels[1].select("path#lodCurve#{chr}").remove()
+                 panels[1].select("text#lodTitle").remove())
 
 
 
