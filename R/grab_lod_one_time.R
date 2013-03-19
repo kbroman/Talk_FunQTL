@@ -26,8 +26,8 @@ individuals <- 1:nind(spal)
 
 # write data to JSON file
 library(RJSONIO)
-cat0 <- function(...) cat(..., sep="", file="../Data/spalding_onetime.json")
-cat0a <- function(...) cat(..., sep="", file="../Data/spalding_onetime.json", append=TRUE)
+cat0 <- function(...) cat(..., sep="", file="../Data/onetime.json")
+cat0a <- function(...) cat(..., sep="", file="../Data/onetime.json", append=TRUE)
 cat0("{\n")
 cat0a("\"phenotype\" : \"", paste("Tip angle at", (thetime-1)*2, "min"), "\",\n\n")
 cat0a("\"chr\" :\n", toJSON(chrnames(spal)), ",\n\n")

@@ -56,8 +56,8 @@ for(i in 1:ncol(gi)) {
 
 # write data to JSON file
 library(RJSONIO)
-cat0 <- function(...) cat(..., sep="", file="../Data/spalding_all_lod.json")
-cat0a <- function(...) cat(..., sep="", file="../Data/spalding_all_lod.json", append=TRUE)
+cat0 <- function(...) cat(..., sep="", file="../Data/all_lod.json")
+cat0a <- function(...) cat(..., sep="", file="../Data/all_lod.json", append=TRUE)
 cat0("{\n")
 cat0a("\"chr\" :\n", toJSON(chrnames(spal)), ",\n\n")
 cat0a("\"map\" :\n", toJSON(map, digits=10), ",\n\n")

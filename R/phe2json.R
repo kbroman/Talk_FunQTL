@@ -11,7 +11,7 @@ library(RJSONIO)
 cat0 <- function(file, ...) cat(..., sep="", file=file)
 cat0a <- function(file, ...) cat(..., sep="", file=file, append=TRUE)
 
-file <- "../Data/spalding_pheno.json"
+file <- "../Data/pheno.json"
 cat0(file, "{\n")
 cat0a(file, "\"times\" : \n", toJSON(times), ",\n\n")
 cat0a(file, "\"pheno\" : \n", toJSON(pheno), "\n\n")

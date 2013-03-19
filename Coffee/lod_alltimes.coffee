@@ -449,4 +449,4 @@ draw = (data) ->
 
 
 # load json file and call draw function
-d3.json("data/spalding_all_lod.json", draw)
+d3.json("data/all_lod.json", draw)

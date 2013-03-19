@@ -354,4 +354,4 @@ draw = (data) ->
        .attr("stroke-width", 0.5)
 
 # load json file and call draw function
-d3.json("Data/spalding_pheno.json", draw)
+d3.json("Data/pheno.json", draw)
