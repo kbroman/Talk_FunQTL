@@ -325,16 +325,49 @@ draw = (data) ->
              .attr("fill", titlecolor)
 
 
-  # plot phenotype curves
-  phePlot = (d) ->
-    d
+  # Label genotypes in phenotype panel
+  panels[2].selectAll("empty")
+           .data(["AA","BB"])
+           .enter()
+           .append("text")
+           .text((d) -> d)
+           .attr("x", (d,i) -> effXscale((6.5+i)*60))
+           .attr("y", pheYscale(-20)/2)
+           .attr("fill", (d,g) ->
+              return darkBlue if g == 0
+              darkRed)
+           .attr("text-anchor", "middle")
+           .attr("dominant-baseline", "middle")
 
-  # plot effect curve
+  # phenotype curve function
+  pheCurve = (pmari,g) ->
+     d3.svg.line()
+       .x((t) -> effXscale(t))
+       .y((t,i) ->
+         if g==1
+           return pheYscale(data.ave1[pmari][i])
+         else
+           return pheYscale(data.ave2[pmari][i]))
+
+  # plot phenotype curves
+  phePlot = (pmari) ->
+    for g in [1..2]
+      panels[2].append("path").attr("class", "pheCurve")
+               .datum(data.times)
+               .attr("d", pheCurve(pmari, g))
+               .attr("stroke", ->
+                   return darkBlue if g==1
+                   darkRed)
+               .attr("fill", "none")
+               .attr("stroke-width", "2")
+
+  # effect curve function
   effCurve = (pmari) ->
      d3.svg.line()
        .x((t) -> effXscale(t))
        .y((t,i) -> effYscale(eff[pmari][i]))
 
+  # plot effect curve
   effPlot = (pmari) ->
     panels[3].append("path").attr("id", "effCurve")
              .datum(data.times)
@@ -358,18 +391,19 @@ draw = (data) ->
            .attr("y", (d) -> imgYscale(d.row))
            .attr("height", pixelPer)
            .attr("fill", (d) ->
-               if eff[d.effindex][d.row] < 0
-                 return darkBlue
+               return darkBlue if eff[d.effindex][d.row] < 0
                darkRed)
            .attr("stroke",  (d) ->
-               if eff[d.effindex][d.row] < 0
-                 return darkBlue
+               return darkBlue if eff[d.effindex][d.row] < 0
                darkRed)
            .attr("stroke-width", 0)
            .attr("opacity", (d) -> imgZscale(d.value))
-           .on("mouseover", (d) -> effPlot(d.effindex))
+           .on("mouseover", (d) ->
+               effPlot(d.effindex)
+               phePlot(d.effindex))
            .on("mouseout", ->
-                 panels[3].selectAll("path#effCurve").remove())
+                 panels[3].selectAll("path#effCurve").remove()
+                 panels[2].selectAll("path.pheCurve").remove())
 
 
 
