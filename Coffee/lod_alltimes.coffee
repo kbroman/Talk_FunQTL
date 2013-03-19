@@ -389,18 +389,21 @@ draw = (data) ->
 
   # plot effect curve
   effPlot = (pmari) ->
-    panels[3].append("path").attr("id", "seArea")
-             .datum(data.times) # every other time, to speed it up
-             .attr("d", seArea(pmari))
-             .attr("stroke", "none")
-             .attr("fill", darkGray)
-             .attr("opacity", 0.3)
     panels[3].append("path").attr("id", "effCurve")
              .datum(data.times)
              .attr("d", effCurve(pmari))
              .attr("stroke", darkBlue)
              .attr("fill", "none")
              .attr("stroke-width", "2")
+
+  # plot SE area
+  sePlot = (pmari) ->
+    panels[3].append("path").attr("id", "seArea")
+             .datum(data.times) # every other time, to speed it up
+             .attr("d", seArea(pmari))
+             .attr("stroke", "none")
+             .attr("fill", darkGray)
+             .attr("opacity", 0.3)
 
   # lod curve function
   lodCurve = (time, chr) ->
@@ -452,6 +455,8 @@ draw = (data) ->
                effPlot(d.effindex)
                phePlot(d.effindex)
                lodPlot(d.row))
+           .on("click", (d) ->
+               sePlot(d.effindex))
            .on("mouseout", ->
                  panels[3].select("path#effCurve").remove()
                  panels[3].select("path#seArea").remove()
