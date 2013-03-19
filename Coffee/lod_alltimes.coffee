@@ -151,6 +151,11 @@ draw = (data) ->
       maxLod = data.lod[i][j] if maxLod < data.lod[i][j]
       minLod = data.lod[i][j] if minLod > data.lod[i][j]
 
+  # center effect plot at 0
+  maxEff = -minEff if -minEff > maxEff
+  minEff = -maxEff if -maxEff < minEff
+
+
   # scales
   effYscale = d3.scale.linear()
                 .domain([minEff, maxEff])
@@ -165,7 +170,8 @@ draw = (data) ->
 
   imgYscale = d3.scale.ordinal()
                 .domain(d3.range(data.times.length))
-                .rangePoints([0, imgh-pixelPer], 0)
+                .rangePoints([imgh-pixelPer, 0], 0)
+                  
 
   imgZscale = d3.scale.linear()
                 .domain([minLodShown, maxLod])
@@ -176,6 +182,149 @@ draw = (data) ->
                 .domain([d3.min(data.times), d3.max(data.times)])
                 .range([pad.inner, w[2]-pad.inner])
 
+  # vertical lines at chromosome boundaries
+  boundaries = []
+  for chr in data.chr[1..]
+    boundaries.push(chrStartPixel[chr])
+
+  for i in [0..1]
+    panels[i].append("g").attr("id", "chrBoundaryLines")
+             .selectAll("empty")
+             .data(boundaries)
+             .enter()
+             .append("line")
+             .attr("y1", 0)
+             .attr("y2", h[i])
+             .attr("x1", (d) -> d-pixelPer*0.5)
+             .attr("x2", (d) -> d-pixelPer*0.5)
+             .attr("fill", "none")
+             .attr("stroke", "darkGray")
+             .attr("stroke-width", 1)
+
+  # x-axis for effect and phenotype panels
+  for i in [2..3]
+    panels[i].selectAll("empty")
+             .data([0..8])
+             .enter()
+             .append("line")
+             .attr("y1", 0)
+             .attr("y2", h[i])
+             .attr("x1", (d) -> effXscale(d*60))
+             .attr("x2", (d) -> effXscale(d*60))
+             .attr("fill", "none")
+             .attr("stroke", "darkGray")
+             .attr("stroke-width", 1)
+    panels[i].selectAll("empty")
+             .data([0..8])
+             .enter()
+             .append("text")
+             .text((d) -> d)
+             .attr("y", h[i] + pad.bottom*0.3)
+             .attr("x", (d) -> effXscale(d*60))
+             .attr("fill", labelcolor)
+             .attr("text-anchor", "middle")
+    panels[i].append("text")
+             .text("Time (hours)")
+             .attr("x", w[i]/2)
+             .attr("y", h[i]+pad.bottom*0.65)
+             .attr("fill", titlecolor)
+             .attr("text-anchor", "middle")
+    
+
+  # chromosome IDs on X axis
+  for i in [0..1]
+    panels[i].append("g").attr("id", "chrLabels")
+             .selectAll("empty")
+             .data(data.chr)
+             .enter()
+             .append("text")
+             .attr("y", h[i]+pad.bottom*0.3)
+             .attr("x", (d) -> (chrStartPixel[d]+chrEndPixel[d])/2)
+             .text((d) -> d)
+             .attr("fill", labelcolor)
+             .attr("text-anchor", "middle")
+    panels[i].append("text")
+             .text("Chromosome")
+             .attr("fill", titlecolor)
+             .attr("text-anchor", "middle")
+             .attr("x", w[i]/2)
+             .attr("y", h[i]+pad.bottom*0.6)
+
+  # y-axis labels
+  panels[0].append("g").attr("id", "imgYaxisLabels")
+           .selectAll("empty")
+           .data([0..8])
+           .enter()
+           .append("text")
+           .text((d) -> d)
+           .attr("x", -pad.left*0.1)
+           .attr("y", (d) -> imgYscale(d*30))
+           .attr("fill", labelcolor)
+           .attr("text-anchor", "end")
+           .attr("dominant-baseline", "middle")
+  panels[0].append("g").attr("id", "imgYaxisGridlines")
+           .selectAll("empty")
+           .data([1..7])
+           .enter()
+           .append("line")
+           .attr("y1", (d) -> imgYscale(d*30))
+           .attr("y2", (d) -> imgYscale(d*30))
+           .attr("x1", 0)
+           .attr("x2", w[0])
+           .attr("fill", "none")
+           .attr("stroke", "lightGray")
+           .attr("stroke-width", 1)
+  panels[0].append("text")
+           .text("Time (hours)")
+           .attr("x", -pad.left*0.6)
+           .attr("y", h[0]/2)
+           .attr("text-anchor", "middle")
+           .attr("dominant-baseline", "middle")
+           .attr("transform", "rotate(270, #{-pad.left*0.6}, #{h[0]/2})")
+           .attr("fill", titlecolor)
+
+  ticks = [null, lodYscale.ticks(5),
+          pheYscale.ticks(6), effYscale.ticks(6)]
+  scale = [null, lodYscale, pheYscale, effYscale]
+  ytitle = [null, "LOD score", "Ave phenotype", "QTL effect"]
+  mult = [null, 0.6, 0.7, 0.7]
+  for i in [1..3]
+    panels[i].selectAll("empty")
+             .data(ticks[i])
+             .enter()
+             .append("text")
+             .text((d) -> nodig(d))
+             .attr("x", -pad.left*0.1)
+             .attr("y", (d) -> scale[i](d))
+             .attr("fill", (d) ->
+                return pink if d == 0 and i==3
+                labelcolor)
+             .attr("text-anchor", "end")
+             .attr("dominant-baseline", "middle")
+    panels[i].selectAll("empty")
+             .data(ticks[i])
+             .enter()
+             .append("line")
+             .attr("y1", (d) -> scale[i](d))
+             .attr("y2", (d) -> scale[i](d))
+             .attr("x1", 0)
+             .attr("x2", w[i])
+             .attr("fill", "none")
+             .attr("stroke", (d) ->
+                return pink if d == 0 and i==3
+                "lightGray")
+             .attr("stroke-width", 1)
+    panels[i].append("text")
+             .text(ytitle[i])
+             .attr("x", -pad.left*mult[i])
+             .attr("y", h[i]/2)
+             .attr("text-anchor", "middle")
+             .attr("dominant-baseline", "middle")
+             .attr("transform", "rotate(270, #{-pad.left*mult[i]}, #{h[i]/2})")
+             .attr("fill", titlecolor)
+
+
+  # image plot
   panels[0].append("g").attr("id", "imagerect")
            .selectAll("empty")
            .data(lodList)
@@ -193,26 +342,9 @@ draw = (data) ->
                if eff[d.effindex][d.row] < 0
                  return darkBlue
                darkRed)
-           .attr("stroke-width", 0.5)
+           .attr("stroke-width", 0)
            .attr("opacity", (d) -> imgZscale(d.value))
 
-  # black vertical lines at chromosome boundaries
-  boundaries = []
-  for chr in data.chr[1..]
-    boundaries.push(chrStartPixel[chr])
-
-  panels[0].append("g").attr("id", "chrBoundaryLines")
-           .selectAll("empty")
-           .data(boundaries)
-           .enter()
-           .append("line")
-           .attr("y1", 0)
-           .attr("y2", h[0])
-           .attr("x1", (d) -> d-pixelPer*0.5)
-           .attr("x2", (d) -> d-pixelPer*0.5)
-           .attr("fill", "none")
-           .attr("stroke", "black")
-           .attr("stroke-width", 1)
 
 
 # load json file and call draw function
