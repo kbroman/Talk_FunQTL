@@ -247,7 +247,7 @@ draw = (data) ->
              .attr("text-anchor", "middle")
   # "Chromosome" just at bottom
   panels[1].append("text")
-           .text("Chromosome") 
+           .text("Chromosome")
            .attr("fill", titlecolor)
            .attr("text-anchor", "middle")
            .attr("x", w[1]/2)
