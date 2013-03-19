@@ -403,10 +403,10 @@ draw = (data) ->
     retime = retime.replace(/\./, ":")
     panels[1].append("text").attr("id", "lodTitle")
              .text("time = #{retime}")
-             .attr("x", chrStartPixel["5"] + (chrEndPixel["5"]-chrStartPixel["5"])*0.1)
-             .attr("y", lodYscale(5.5))
-             .attr("fill", darkBlue)
-             .attr("text-anchor", "start")
+             .attr("x", w[1]/2)
+             .attr("y", -pad.top*0.6)
+             .attr("fill", maincolor)
+             .attr("text-anchor", "middle")
              .attr("dominant-baseline", "middle")
     # LOD curves
     for chr in data.chr
