@@ -139,12 +139,13 @@ draw = (data) ->
       a1 = data.ave1[i][j]
       a2 = data.ave2[i][j]
       e  = eff[i][j]
+      se = data.se[i][j]
       minPhe = a1 if minPhe > a1
       maxPhe = a1 if maxPhe < a1
       minPhe = a2 if minPhe > a2
       maxPhe = a2 if maxPhe < a2
-      minEff = e  if minEff > e
-      maxEff = e  if maxEff < e
+      minEff = e-2*se  if minEff > e - 2*se
+      maxEff = e+2*se  if maxEff < e + 2*se
   maxLod = -1
   minLod = 50
   for i of data.lod
@@ -379,8 +380,21 @@ draw = (data) ->
        .x((t) -> effXscale(t))
        .y((t,i) -> effYscale(eff[pmari][i]))
 
+  # effect curve function
+  seArea = (pmari) ->
+    d3.svg.area()
+          .x((t) -> effXscale(t))
+          .y0((t,i) -> effYscale(eff[pmari][i] - 2*data.se[pmari][i]))
+          .y1((t,i) -> effYscale(eff[pmari][i] + 2*data.se[pmari][i]))
+
   # plot effect curve
   effPlot = (pmari) ->
+    panels[3].append("path").attr("id", "seArea")
+             .datum(data.times) # every other time, to speed it up
+             .attr("d", seArea(pmari))
+             .attr("stroke", "none")
+             .attr("fill", darkGray)
+             .attr("opacity", 0.3)
     panels[3].append("path").attr("id", "effCurve")
              .datum(data.times)
              .attr("d", effCurve(pmari))
@@ -441,6 +455,7 @@ draw = (data) ->
                lodPlot(d.row))
            .on("mouseout", ->
                  panels[3].selectAll("path#effCurve").remove()
+                 panels[3].selectAll("path#seArea").remove()
                  panels[2].selectAll("path.pheCurve").remove()
                  panels[2].selectAll("text#pheTitle").remove()
                  panels[1].selectAll("path.lodCurve").remove()
