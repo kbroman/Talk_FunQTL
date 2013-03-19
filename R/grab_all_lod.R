@@ -54,6 +54,12 @@ for(i in 1:ncol(gi)) {
   ave2[i,] <- colMeans(pheno[gi[,i]==2,])
 }
 
+# SE of difference
+se <- ave1
+for(i in 1:ncol(gi))
+  se[i,] <- sqrt(apply(pheno[gi[,i]==1,], 2, function(a) var(a)/length(a)) +
+                 apply(pheno[gi[,i]==2,], 2, function(a) var(a)/length(a)))
+
 # write data to JSON file
 library(RJSONIO)
 cat0 <- function(...) cat(..., sep="", file="../Data/all_lod.json")
@@ -67,5 +73,6 @@ cat0a("\"pmarindex\" :\n", toJSON(pmarindex), ",\n\n")
 cat0a("\"times\" :\n", toJSON(times), ",\n\n")
 cat0a("\"lod\" :\n", toJSON(lod), ",\n\n")
 cat0a("\"ave1\" :\n", toJSON(ave1), ",\n\n")
-cat0a("\"ave2\" :\n", toJSON(ave2), "\n\n")
+cat0a("\"ave2\" :\n", toJSON(ave2), ",\n\n")
+cat0a("\"se\" :\n", toJSON(se), "\n\n")
 cat0a("}\n")
