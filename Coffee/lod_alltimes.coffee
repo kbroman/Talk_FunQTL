@@ -41,7 +41,7 @@ draw = (data) ->
     for p of data.map[chr]
       pmarChr[p] = chr
 
-  minLodShown = 0.5
+  minLodShown = 1
 
   # to contain the start and end positions
   chrStart = {}
