@@ -402,7 +402,7 @@ draw = (data) ->
              .datum(data.times) # every other time, to speed it up
              .attr("d", seArea(pmari))
              .attr("stroke", "none")
-             .attr("fill", darkGray)
+             .attr("fill", "lightblue")
              .attr("opacity", 0.3)
 
   # lod curve function
@@ -456,6 +456,7 @@ draw = (data) ->
                phePlot(d.effindex)
                lodPlot(d.row))
            .on("click", (d) ->
+               panels[3].select("path#seArea").remove()
                sePlot(d.effindex))
            .on("mouseout", ->
                  panels[3].select("path#effCurve").remove()
