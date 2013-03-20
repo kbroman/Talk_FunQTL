@@ -484,4 +484,4 @@ draw = (data) ->
   d3.select("circle#circ#{chr}_#{index}").attr("opacity", 1).attr("fill",altpink).attr("stroke",purple)
 
 # load json file and call draw function
-d3.json("data/onetime.json", draw)
+d3.json("Data/onetime.json", draw)
