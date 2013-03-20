@@ -5,7 +5,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
-@import url(css/sperm.css);
 @import url(css/stack.css);
 @import url(css/d3-tip.css);
 @import url(css/figures.css);
@@ -18,16 +17,18 @@
 <script type="text/javascript" src="js/d3.tip.js"></script>
 
 
-<!-- for the movie -->
-<script src="Movie/scripts/prototype.js" language="JavaScript" type="text/javascript"></script>
-<script src="Movie/scripts/qtp_poster.js" language="JavaScript" type="text/javascript"></script>
-<link href="Movie/stylesheets/qtp_poster.css" rel="StyleSheet" type="text/css" />
 
 
 <title>QTL mapping for phenotypes measured over time</title>
 </head>
 <body class="overview">
 
+<!-- for the movie : put in head -->
+<!--
+<script src="Movie/scripts/prototype.js" language="JavaScript" type="text/javascript"></script>
+<script src="Movie/scripts/qtp_poster.js" language="JavaScript" type="text/javascript"></script>
+<link href="Movie/stylesheets/qtp_poster.css" rel="StyleSheet" type="text/css" />
+-->
 
 
 
@@ -108,10 +109,133 @@ href="http://www.daviddeen.com">David Deen</a>.
   <img src="Movie/gmovie.jpg" width="440" alt="Phenotype movie"/>
 </a></div>
 
+<!--
+<aside>
+Click on the image to see a movie.<br><br>
+
+You&rsquo;ll be popped to a separate page; you&rsquo;ll need to navigate back.
+</aside>
+-->
+
 <p class="pg">4</p></section>
 
 </section>
 
+
+
+<section nopadding>
+
+<h3 style="margin-top:10px;margin-left:-20px;">Phenotypes measured over time</h3>
+
+<div id="phenofig" style="margin-top:-50px;margin-left:100px;"></div>
+
+<aside>
+The top panel is an image plot of the phenotype, measured over time,
+for many lines.  The rows correspond to lines.
+There is a color scale at the bottom right.<br><br>
+
+Hover over a row to see the detailed time course below.<br><br>
+
+Click on a row and the curve below will be retained as you move
+away.  Click again (if you can get your pointer onto it) and it will
+be removed.
+</aside>
+
+
+<p class="codelink">
+<a href="Coffee/pheno.coffee" class="gray">code</a> |
+<a href="Data/pheno.json" class="gray">data</a>
+
+
+<script type="text/javascript" src="JS/pheno.js"></script>
+<p class="pg">5</p></section>
+
+
+
+<section>
+
+<h3 style="margin-top:10px;margin-left:-20px;">LOD curves, 62 min</h3>
+
+<div id="lod_onetime_fig" style="margin-left:-50px;"></div>
+
+<aside>
+LOD curves and QTL effect plot for a single time point.
+</aside>
+
+
+<p class="codelink">
+<a href="Coffee/lod_onetime.coffee" class="gray">code</a> |
+<a href="Data/ontime.json" class="gray">data</a>
+
+
+<script type="text/javascript" src="JS/lod_onetime.js"></script>
+<p class="pg">6</p></section>
+
+
+
+
+<section nopadding>
+
+<h3>All times, considered individually</h3>
+
+
+<div id="lod_alltimes_fig" style="font-size:20px;margin-left:-50px;"></div>
+
+<aside>
+Here we consider a phenotype measured over time, and perform QTL
+analysis with each time point individually, to seek genetic loci that
+affect the response.  The data concern a set of 162 recombinant inbred
+lines.<br><br>
+
+The top-left plot is a &ldquo;heat map&rdquo; of the LOD scores
+for each time point at each genomic position.  LOD scores are also
+colored to indicate the sign of the QTL effect, with red indicating
+that BB lines have larger phenotype values and blue indicating that AA lines
+have larger phenotype values.  We consider only those (position, time)
+pairs with LOD > 1.<br><br>
+
+When you hover over a point in the top-left plot, the LOD curves for the
+corresponding time are shown below, and the phenotype averages and
+estimated QTL effect (across time) for the corresponding genomic
+position are shown to the right.<br><br>
+
+Click on a point to show pointwise confidence bands on the QTL
+effect (&plusmn; 2 SE).  (We require a mouse click, as otherwise the graph
+was painfully slow to refresh.)
+</aside>
+
+
+<p class="codelink">
+<a href="Coffee/lod_alltimes.coffee" class="gray">code</a> |
+<a href="Data/alltimes.json" class="gray">data</a>
+
+
+<script type="text/javascript" src="JS/lod_alltimes.js"></script>
+<p class="pg">7</p></section>
+
+
+
+
+
+<section>
+<h3>Acknowledgments</h3>
+
+<div style="margin-left:120px;font-size:28px;">
+
+<table cellspacing=25>
+  <tr valign="top">
+     <td class="lowlight">Edgar Spalding<br>Candace Moore<br>Logan Johnson</td>
+     <td></td>
+     <td>Botany, UW-Madison</td>
+     </tr>
+</table>
+</div>
+
+<aside>
+The data presented come from a collaboration with Edgar Spalding and colleagues.
+</aside>
+
+<p class="pg">8</p></section>
 
 
 
@@ -120,3 +244,4 @@ href="http://www.daviddeen.com">David Deen</a>.
 <script type="text/javascript" src="js/stack.v0.js"></script>
 </body>
 </html>
+
