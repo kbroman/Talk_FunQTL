@@ -121,7 +121,7 @@ draw = (data) ->
                    .attr("transform", "translate(#{left[i]}, #{top[i]})")
 
   # rectangles
-  for i of panels
+  for i in [0..3]
     panels[i].append("rect")
              .attr("height", h[i])
              .attr("width", w[i])
