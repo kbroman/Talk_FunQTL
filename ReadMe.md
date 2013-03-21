@@ -2,8 +2,7 @@ Talk: &ldquo;QTL mapping for phenotypes measured over time&rdquo;
 ----------------------------------------------------------------------
 
 See it in action
-[here](http://www.biostat.wisc.edu/~kbroman/talks/FunQTL)
-(eventually).
+[here](http://www.biostat.wisc.edu/~kbroman/talks/FunQTL).
 
 These are slides for a talk I will give at a plant breeding symposium
 at Kansas State University on 2 April 2013.
