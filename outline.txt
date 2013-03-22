@@ -9,13 +9,13 @@ x2. About me
 
 -5. Movie
 
-6. RIL
+-6. RIL
 
 7. phenotypes, genotypes
 
 -8. fancier picture of phenotypes
 
-- 9. Fancy picture of QTL analysis of a single phenotype
+-9. Fancy picture of QTL analysis of a single phenotype
 
 10. Definition of LOD score
 
