@@ -1,4 +1,4 @@
-mainstuff: js presentation.html
+mainstuff: js presentation.html Figs/riself.png
 
 presentation.html: index.html js css/kbroman_talk.css css/kbroman_presentation.css
 	Perl/create_presentation.pl
@@ -25,6 +25,9 @@ JS/lod_onetime.js: Coffee/lod_onetime.coffee
 
 JS/lod_alltimes.js: Coffee/lod_alltimes.coffee
 	coffee -co JS Coffee/lod_alltimes.coffee
+
+Figs/riself.png: R/riself_fig.R R/meiosis_func.R R/colors.R
+	cd R;R CMD BATCH --no-save riself_fig.R
 
 webhtml:
 	scp *.html broman-7:public_html/presentations/FunQTL/
