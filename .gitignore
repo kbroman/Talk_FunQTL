@@ -7,7 +7,10 @@ JS/colorbrewer.js
 JS/pheno.js
 JS/lod_onetime.js
 JS/lod_alltimes.js
+JS/draw_lod_onetime_random.js
+JS/draw_lod_onetime_real.js
 Data/pheno.json
 Data/onetime.json
+Data/onetime_random.json
 Data/all_lod.json
 R/*.Rout

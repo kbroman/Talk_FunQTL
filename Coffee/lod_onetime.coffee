@@ -3,7 +3,7 @@
 # This is awful code; I just barely know what I'm doing.
 
 # function that does all of the work
-draw = (data) ->
+drawLodOneTime = (data) ->
 
   # colors
   darkBlue = "darkslateblue"
@@ -64,7 +64,14 @@ draw = (data) ->
   tinyRad = "1"
 
   # create svg
-  svg = d3.select("div#lod_onetime_fig")
+  #
+  # If data has a component name, "random", it's for permuted phenotypes
+  if data?.random
+    div4fig = "div#lod_onetime_random_fig"
+  else
+    div4fig = "div#lod_onetime_fig"
+
+  svg = d3.select(div4fig)
           .append("svg")
           .attr("height", totalh)
           .attr("width", totalw)
@@ -482,6 +489,3 @@ draw = (data) ->
   d3.selectAll("text#pxgtitle_position").text(title)
   plotPXG(maxLod_marker)
   d3.select("circle#circ#{chr}_#{index}").attr("opacity", 1).attr("fill",altpink).attr("stroke",purple)
-
-# load json file and call draw function
-d3.json("Data/onetime.json", draw)
