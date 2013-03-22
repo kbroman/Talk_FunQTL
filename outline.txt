@@ -11,42 +11,40 @@ x2. About me
 
 -6. RIL
 
-7. phenotypes, genotypes
+-7. phenotypes, genotypes
 
 -8. fancier picture of phenotypes
 
 -9. Fancy picture of QTL analysis of a single phenotype
 
-10. Definition of LOD score
+10. Fancy picture with randomized phenotype
 
-11. Illustration of permutation test
+11. Permutation distribution of genome-wide maximum LOD
 
 12. Methods for dealing with outcomes measured over time
    - Consider each time point individually
    - fit model and treat parameters as phenotypes
    - nonparmetric version; treat coefficients as phenotypes
 
-x13. LOD scores for each position with each time point
+-13. Fancy picture of that  (or maybe *just* do the fancy version?)
 
--14. Fancy picture of that  (or maybe *just* do the fancy version?)
+14. Simple methods of combining across time
 
-15. Simple methods of combining across time
+15. Results
 
-16. Results
-
-17. Multiple QTL analysis: why?
+16. Multiple QTL analysis: why?
     
-18. Broman & Speed for additive QTL
+17. Broman & Speed for additive QTL
 
-19. Results, considering each time point individually
+18. Results, considering each time point individually
 
-20. Multiple-QTL analysis, combining across time points
+19. Multiple-QTL analysis, combining across time points
 
-21. Results
+20. Results
 
-22. Summary & Future work
+21. Summary & Future work
 
-23. Acknowledgments
+22. Acknowledgments
 
 
 
