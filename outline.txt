@@ -1,24 +1,21 @@
 
-1. Title
+-1. Title
 
-2. About me
+x2. About me
 
-3. Mice
+-3. Mice
 
-4. Mouse and human
+-4. Mouse and human
 
-5. Movie
+-5. Movie
 
 6. RIL
 
 7. phenotypes, genotypes
 
-8. fancier picture of phenotypes
+-8. fancier picture of phenotypes
 
-   - some way to explore them: image linked to curves
-     click to view phenotype
-
-9. Fancy picture of QTL analysis of a single phenotype
+- 9. Fancy picture of QTL analysis of a single phenotype
 
 10. Definition of LOD score
 
@@ -29,9 +26,9 @@
    - fit model and treat parameters as phenotypes
    - nonparmetric version; treat coefficients as phenotypes
 
-13. LOD scores for each position with each time point
+x13. LOD scores for each position with each time point
 
-14. Fancy picture of that  (or maybe *just* do the fancy version?)
+-14. Fancy picture of that  (or maybe *just* do the fancy version?)
 
 15. Simple methods of combining across time
 
