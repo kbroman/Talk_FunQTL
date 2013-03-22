@@ -43,7 +43,7 @@ webdata:
 	scp Data/*.json broman-7:public_html/presentations/FunQTL/Data/
 
 webfig:
-	scp Figs/*.jpg broman-7:public_html/presentations/FunQTL/Figs/
+	scp Figs/*.jpg Figs/*.png broman-7:public_html/presentations/FunQTL/Figs/
 
 web: webhtml webcss webcode webfig webdata
 
