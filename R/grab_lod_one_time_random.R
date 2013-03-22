@@ -2,16 +2,13 @@
 # and convert to JSON file for interactive graph
 
 load("spal.RData")
-load("out.RData")
 
 thetime <- 32
 spal$pheno[,thetime] <- sample(spal$pheno[,thetime])
-tmp <- scanone(spal, phe=thetime, method="hk")
-out[,thetime+2] <- tmp[,3]
+out <- scanone(spal, phe=thetime, method="hk")
 
 # marker index within lod curves
 map <- pull.map(spal)
-out <- out[,c(1,2,thetime)]
 names(out)[3] <- "lod"
 outspl <- split(out, out[,1])
 mar <- map
