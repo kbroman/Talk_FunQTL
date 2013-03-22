@@ -269,6 +269,16 @@ draw = (data) ->
         .x((d) -> xScaleCurve(d))
         .y((d,di) -> yScaleCurve(data.pheno[ind][di]))
 
+  # background curves for all individuals
+  bgdcurves = curve.append("g").attr("id", "bgdphecurve")
+  for i of data.pheno
+    bgdcurves.append("path")
+             .datum(data.times)
+             .attr("d", phecurve(i))
+             .attr("stroke", d3.rgb(128, 128, 128))
+             .attr("fill", "none")
+             .attr("stroke-width", 0.5)
+
   # function to draw curve for an individual
   drawCurve = (ind) ->
     return 0 if ind == curInd
