@@ -66,10 +66,12 @@ drawLodOneTime = (data) ->
   # create svg
   #
   # If data has a component name, "random", it's for permuted phenotypes
-  if data?.random
+  if data?.random ? false
     div4fig = "div#lod_onetime_random_fig"
   else
     div4fig = "div#lod_onetime_fig"
+
+  console.log(div4fig)
 
   svg = d3.select(div4fig)
           .append("svg")
