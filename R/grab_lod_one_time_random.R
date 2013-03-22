@@ -1,8 +1,9 @@
 # Get LOD curve and data for a single time point
 # and convert to JSON file for interactive graph
 
-load("spal.RData")
 
+set.seed(69456948)
+load("spal.RData")
 thetime <- 32
 spal$pheno[,thetime] <- sample(spal$pheno[,thetime])
 out <- scanone(spal, phe=thetime, method="hk")

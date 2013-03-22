@@ -18,19 +18,16 @@ Data/onetime.json: R/spal.RData R/out.RData R/grab_lod_one_time.R
 Data/onetime_random.json: R/spal.RData R/out.RData R/grab_lod_one_time_random.R
 	cd R;R CMD BATCH grab_lod_one_time_random.R
 
-js: JS/pheno.js JS/lod_onetime.js JS/lod_alltimes.js JS/draw_lod_onetime_real.js JS/draw_lod_onetime_random.js
+js: JS/pheno.js JS/lod_onetime.js JS/lod_onetime_random.js JS/lod_alltimes.js
 
 JS/pheno.js: Coffee/pheno.coffee
 	coffee -co JS Coffee/pheno.coffee
 
-JS/lod_onetime.js: Coffee/lod_onetime.coffee
-	coffee -bco JS Coffee/lod_onetime.coffee
+JS/lod_onetime.js: Coffee/lod_onetime.coffee Data/onetime.json
+	coffee -co JS Coffee/lod_onetime.coffee
 
-JS/draw_lod_onetime_real.js: Coffee/draw_lod_onetime_real.coffee Data/onetime.json
-	coffee -co JS Coffee/draw_lod_onetime_real.coffee
-
-JS/draw_lod_onetime_random.js: Coffee/draw_lod_onetime_random.coffee Data/onetime_random.json
-	coffee -co JS Coffee/draw_lod_onetime_random.coffee
+JS/lod_onetime_random.js: Coffee/lod_onetime_random.coffee Data/onetime_random.json
+	coffee -co JS Coffee/lod_onetime_random.coffee
 
 JS/lod_alltimes.js: Coffee/lod_alltimes.coffee
 	coffee -co JS Coffee/lod_alltimes.coffee

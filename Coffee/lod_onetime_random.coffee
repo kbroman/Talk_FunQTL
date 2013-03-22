@@ -3,7 +3,7 @@
 # This is awful code; I just barely know what I'm doing.
 
 # function that does all of the work
-draw = (data) ->
+drawRandom = (data) ->
 
   # colors
   darkBlue = "darkslateblue"
@@ -64,14 +64,14 @@ draw = (data) ->
   tinyRad = "1"
 
   # create svg
-  svg = d3.select("div#lod_onetime_fig")
+  svg = d3.select("div#lod_onetime_random_fig")
           .append("svg")
           .attr("height", totalh)
           .attr("width", totalw)
 
   # groups for the two panels, translated to have origin = (0,0)
-  lodpanel = svg.append("g").attr("id", "lodpanel")
-  effpanel = svg.append("g").attr("id", "effpanel")
+  lodpanel = svg.append("g").attr("id", "random_lodpanel")
+  effpanel = svg.append("g").attr("id", "random_effpanel")
 
   # jitter amounts for PXG plot
   jitterAmount = (w[1])/50
@@ -119,8 +119,7 @@ draw = (data) ->
 
   # vertical scales
   lodyScale = d3.scale.linear()
-#                .domain([0, maxLod])
-                .domain([0, 5.4])  # hard-coded maximum so this and the non-randomized version have same scale
+                .domain([0, 5.4]) # hard-coded maximum so this and the non-randomized version have same scale
                 .range([pad.top+h-pad.inner, pad.top+pad.inner])
   effyScale = d3.scale.linear()
                 .domain([minPhe, maxPhe])
@@ -154,11 +153,11 @@ draw = (data) ->
       markerchr[m] = chr
 
   # background rectangles for each chromosome, alternate color
-  chrRect = lodpanel.append("g").attr("id", "chrRect").selectAll("empty")
+  chrRect = lodpanel.append("g").attr("id", "random_chrRect").selectAll("empty")
      .data(data.chr)
      .enter()
      .append("rect")
-     .attr("id", (d) -> "rect#{d}")
+     .attr("id", (d) -> "random_rect#{d}")
      .attr("x", (d) -> chrPixelStart[d] - chrGap/2)
      .attr("y", pad.top)
      .attr("width", (d) -> chrPixelEnd[d] - chrPixelStart[d]+chrGap)
@@ -167,9 +166,9 @@ draw = (data) ->
      .attr("stroke", "none")
 
   # axes
-  lodaxes = lodpanel.append("g").attr("id", "lodaxes")
+  lodaxes = lodpanel.append("g").attr("id", "random_lodaxes")
   lodticks = lodyScale.ticks(5)
-  lodaxes.append("g").attr("id", "lod_yaxis_lines")
+  lodaxes.append("g").attr("id", "random_lod_yaxis_lines")
       .selectAll("empty")
       .data(lodticks)
       .enter()
@@ -180,7 +179,7 @@ draw = (data) ->
       .attr("y2", (d) -> lodyScale(d))
       .attr("stroke", labelcolor)
       .attr("stroke-width", 1)
-  lodaxes.append("g").attr("id", "lod_yaxis_labels")
+  lodaxes.append("g").attr("id", "random_lod_yaxis_labels")
       .selectAll("empty")
       .data(lodticks)
       .enter()
@@ -192,14 +191,14 @@ draw = (data) ->
       .attr("dominant-baseline", "middle")
   xloc = pad.left*0.4
   yloc = pad.top + h/2
-  lodaxes.append("text").attr("id", "lod_yaxis_title")
+  lodaxes.append("text").attr("id", "random_lod_yaxis_title")
       .attr("x", xloc)
       .attr("y", yloc)
       .text("LOD score")
       .attr("transform", "rotate(270, #{xloc}, #{yloc})")
       .attr("fill", titlecolor)
       .attr("text-anchor", "middle")
-  lodaxes.append("g").attr("id", "lod_xaxis_labels")
+  lodaxes.append("g").attr("id", "random_lod_xaxis_labels")
       .selectAll("empty")
       .data(data.chr)
       .enter()
@@ -210,16 +209,16 @@ draw = (data) ->
       .attr("fill", labelcolor)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "hanging")
-  lodaxes.append("text").attr("id", "lod_xaxis_title")
+  lodaxes.append("text").attr("id", "random_lod_xaxis_title")
       .text("Chromosome")
       .attr("x", pad.left + w[0]/2)
       .attr("y", pad.top+h+pad.bottom*0.5)
       .attr("text-anchor", "middle")
       .attr("fill", titlecolor)
       .attr("dominant-baseline", "hanging")
-  effaxes = effpanel.append("g").attr("id", "effaxes")
+  effaxes = effpanel.append("g").attr("id", "random_effaxes")
   effticks = effyScale.ticks(7)
-  effaxes.append("g").attr("id", "eff_xaxis_lines")
+  effaxes.append("g").attr("id", "random_eff_xaxis_lines")
       .selectAll("empty")
       .data([1,2])
       .enter()
@@ -230,7 +229,7 @@ draw = (data) ->
       .attr("y2", pad.top+h)
       .attr("stroke", darkGray)
       .attr("stroke-width", 1)
-  effaxes.append("g").attr("id", "eff_xaxis_labels")
+  effaxes.append("g").attr("id", "random_eff_xaxis_labels")
       .selectAll("empty")
       .data([1,2])
       .enter()
@@ -241,14 +240,14 @@ draw = (data) ->
       .attr("fill", labelcolor)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "hanging")
-  effaxes.append("text").attr("id", "lod_xaxis_title")
+  effaxes.append("text").attr("id", "random_lod_xaxis_title")
       .text("Genotype")
       .attr("x", left[1] + w[1]/2)
       .attr("y", pad.top+h+pad.bottom*0.5)
       .attr("text-anchor", "middle")
       .attr("fill", titlecolor)
       .attr("dominant-baseline", "hanging")
-  effaxes.append("g").attr("id", "eff_yaxis_lines")
+  effaxes.append("g").attr("id", "random_eff_yaxis_lines")
       .selectAll("empty")
       .data(effticks)
       .enter()
@@ -259,7 +258,7 @@ draw = (data) ->
       .attr("y2", (d) -> effyScale(d))
       .attr("stroke", labelcolor)
       .attr("stroke-width", 1)
-  effaxes.append("g").attr("id", "eff_yaxis_labels")
+  effaxes.append("g").attr("id", "random_eff_yaxis_labels")
       .selectAll("empty")
       .data(effticks)
       .enter()
@@ -272,7 +271,7 @@ draw = (data) ->
       .attr("dominant-baseline", "middle")
   xloc = left[1]-pad.left*0.7
   yloc = pad.top + h/2
-  effaxes.append("text").attr("id", "eff_yaxis_title")
+  effaxes.append("text").attr("id", "random_eff_yaxis_title")
       .attr("x", xloc)
       .attr("y", yloc)
       .text("Tip angle at 62 min")
@@ -286,8 +285,8 @@ draw = (data) ->
         .x((d) -> lodxScale[chr](d))
         .y((d,i) -> lodyScale(data.lod[chr].lod[i]))
 
-  curves = lodpanel.append("g").attr("id", "curves")
-  dotsAtMarkers = lodpanel.append("g").attr("id", "dotsAtMarkers")
+  curves = lodpanel.append("g").attr("id", "random_curves")
+  dotsAtMarkers = lodpanel.append("g").attr("id", "random_dotsAtMarkers")
 
   markerClick = {}
   for chr in data.chr
@@ -303,28 +302,28 @@ draw = (data) ->
              .padding(3)
              .text((z) -> z)
              .attr("class", "d3-tip")
-             .attr("id", "martip")
+             .attr("id", "random_martip")
   indtip = d3.svg.tip()
              .orient("right")
              .padding(3)
              .text((d,i) -> data.individuals[i])
              .attr("class", "d3-tip")
-             .attr("id", "indtip")
+             .attr("id", "random_indtip")
   efftip = d3.svg.tip()
              .orient("right")
              .padding(3)
              .text((d) -> onedig(d))
              .attr("class", "d3-tip")
-             .attr("id", "efftip")
+             .attr("id", "random_efftip")
 
-  effpanel.append("text").attr("id", "pxgtitle_marker")
+  effpanel.append("text").attr("id", "random_pxgtitle_marker")
     .attr("x", left[1]+w[1]/2)
     .attr("y", pad.top*0.02)
     .text("")
     .attr("fill", titlecolor)
     .attr("text-anchor", "middle")
     .attr("dominant-baseline", "hanging")
-  effpanel.append("text").attr("id", "pxgtitle_position")
+  effpanel.append("text").attr("id", "random_pxgtitle_position")
     .attr("x", left[1]+w[1]/2)
     .attr("y", pad.top*0.52)
     .text("")
@@ -344,12 +343,12 @@ draw = (data) ->
       for i of means
         means[i] /= n[i]
 
-      effpanel.append("g").attr("id", "means")
+      effpanel.append("g").attr("id", "random_means")
           .selectAll("empty")
           .data(means)
           .enter()
           .append("line")
-          .attr("class", "plotPXG")
+          .attr("class", "random_plotPXG")
           .attr("x1", (d,i) -> effxScale(i+1) - jitterAmount*4)
           .attr("x2", (d,i) -> effxScale(i+1) + jitterAmount*4)
           .attr("y1", (d) -> effyScale(d))
@@ -358,14 +357,14 @@ draw = (data) ->
           .attr("stroke-width", 4)
           .attr("fill", "none")
           .on("mouseover", efftip)
-          .on("mouseout", -> d3.selectAll("#efftip").remove())
+          .on("mouseout", -> d3.selectAll("#random_efftip").remove())
 
-      effpanel.append("g").attr("id", "plotPXG")
+      effpanel.append("g").attr("id", "random_plotPXG")
           .selectAll("empty")
           .data(data.phevals)
           .enter()
           .append("circle")
-          .attr("class", "plotPXG")
+          .attr("class", "random_plotPXG")
           .attr("cx", (d,i) ->
               g = Math.abs(data.geno[marker][i])
               effxScale(g)+jitter[i])
@@ -384,7 +383,7 @@ draw = (data) ->
                d3.select(this).attr("r", bigRad)
                indtip.call(this, d, i)
           .on "mouseout", ->
-               d3.selectAll("#indtip").remove()
+               d3.selectAll("#random_indtip").remove()
                d3.select(this).attr("r", peakRad)
 
   revPXG = (marker) ->
@@ -399,13 +398,13 @@ draw = (data) ->
       for i of means
         means[i] /= n[i]
 
-      effpanel.selectAll("line.plotPXG")
+      effpanel.selectAll("line.random_plotPXG")
           .data(means)
           .transition().duration(1000)
           .attr("y1", (d) -> effyScale(d))
           .attr("y2", (d) -> effyScale(d))
 
-      svg.selectAll("circle.plotPXG")
+      svg.selectAll("circle.random_plotPXG")
          .data(data.phevals)
          .transition().duration(1000)
          .attr("cx", (d,i) ->
@@ -445,8 +444,8 @@ draw = (data) ->
           .data(data.markers[chr])
           .enter()
           .append("circle")
-          .attr("class", "markerCircle")
-          .attr("id", (d) -> "circ#{markerchr[d]}_#{data.markerindex[markerchr[d]][d]}")
+          .attr("class", "random_markerCircle")
+          .attr("id", (d) -> "random_circ#{markerchr[d]}_#{data.markerindex[markerchr[d]][d]}")
           .attr("cx", (d) -> lodxScale[chr](data.lod[chr].pos[data.markerindex[chr][d]]))
           .attr("cy", (d) -> lodyScale(data.lod[chr].lod[data.markerindex[chr][d]]))
           .attr("r", bigCircRad)
@@ -458,18 +457,18 @@ draw = (data) ->
                  martip.call(this,d))
           .on "mouseout", (d) ->
                  d3.select(this).attr("opacity", markerClick[d])
-                 d3.selectAll("#martip").remove()
+                 d3.selectAll("#random_martip").remove()
           .on "click", (d) ->
               chr = markerchr[d]
               index = data.markerindex[chr][d]
               pos = data.lod[chr].pos[index]
               title = "(chr #{chr}, #{onedig(pos)} cM)"
-              d3.selectAll("text#pxgtitle_marker").text(d)
-              d3.selectAll("text#pxgtitle_position").text(title)
+              d3.selectAll("text#random_pxgtitle_marker").text(d)
+              d3.selectAll("text#random_pxgtitle_position").text(title)
               markerClick[lastMarker] = 0
               lastchr = markerchr[lastMarker]
               lastindex = data.markerindex[lastchr][lastMarker]
-              d3.select("circle#circ#{lastchr}_#{lastindex}").attr("opacity", 0).attr("fill",purple).attr("stroke","none")
+              d3.select("circle#random_circ#{lastchr}_#{lastindex}").attr("opacity", 0).attr("fill",purple).attr("stroke","none")
               revPXG d
               lastMarker = d
               markerClick[d] = 1
@@ -479,10 +478,10 @@ draw = (data) ->
   index = data.markerindex[chr][maxLod_marker]
   pos = data.lod[chr].pos[index]
   title = "(chr #{chr}, #{onedig(pos)} cM)"
-  d3.selectAll("text#pxgtitle_marker").text(maxLod_marker)
-  d3.selectAll("text#pxgtitle_position").text(title)
+  d3.selectAll("text#random_pxgtitle_marker").text(maxLod_marker)
+  d3.selectAll("text#random_pxgtitle_position").text(title)
   plotPXG(maxLod_marker)
-  d3.select("circle#circ#{chr}_#{index}").attr("opacity", 1).attr("fill",altpink).attr("stroke",purple)
+  d3.select("circle#random_circ#{chr}_#{index}").attr("opacity", 1).attr("fill",altpink).attr("stroke",purple)
 
 # load json file and call draw function
-d3.json("Data/onetime.json", draw)
+d3.json("Data/onetime_random.json", drawRandom)
