@@ -25,3 +25,23 @@ JS/lod_onetime.js: Coffee/lod_onetime.coffee
 
 JS/lod_alltimes.js: Coffee/lod_alltimes.coffee
 	coffee -co JS Coffee/lod_alltimes.coffee
+
+webhtml:
+	scp *.html broman-7:public_html/presentations/FunQTL/
+
+webcss:
+	scp CSS/*.css broman-7:public_html/presentations/FunQTL/CSS/
+
+webcode:
+	scp JS/*.js broman-7:public_html/presentations/FunQTL/JS/
+	scp Coffee/*.coffee broman-7:public_html/presentations/FunQTL/Coffee/
+
+webdata:
+	scp Data/*.json broman-7:public_html/presentations/FunQTL/Data/
+
+webfig:
+	scp Figs/*.jpg broman-7:public_html/presentations/FunQTL/Figs/
+
+web: webhtml webcss webcode webfig webdata
+
+all: js web presentation.html
