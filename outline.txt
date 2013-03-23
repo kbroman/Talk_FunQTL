@@ -17,9 +17,9 @@ x2. About me
 
 -9. Fancy picture of QTL analysis of a single phenotype
 
-10. Fancy picture with randomized phenotype
+-10. Fancy picture with randomized phenotype
 
-11. Permutation distribution of genome-wide maximum LOD
+-11. Permutation distribution of genome-wide maximum LOD
 
 12. Methods for dealing with outcomes measured over time
    - Consider each time point individually
