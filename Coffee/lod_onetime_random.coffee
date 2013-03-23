@@ -109,7 +109,7 @@ draw = (data) ->
 
     lodpanel.remove()
     effpanel.remove()
-    
+
     lodpanel = svg.append("g").attr("id", "random_lodpanel")
     effpanel = svg.append("g").attr("id", "random_effpanel")
 
@@ -121,7 +121,7 @@ draw = (data) ->
 
     lodpanel.remove()
     effpanel.remove()
-    
+
     lodpanel = svg.append("g").attr("id", "random_lodpanel")
     effpanel = svg.append("g").attr("id", "random_effpanel")
 
