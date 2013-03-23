@@ -44,6 +44,9 @@ buttonw = 170
 buttonh = 40
 totalh += buttonh + pad.bottom/2
 
+# back button
+buttonw2 = 80
+
 # create svg
 svg = d3.select("div#lod_onetime_random_fig")
         .append("svg")
@@ -73,6 +76,26 @@ permbuttong.append("text")
           .style("font-size", "28px")
           .style("pointer-events", "none")
 
+backbuttong = svg.append("g").attr("id", "random_backbutton")
+                .attr("transform", "translate(#{buttonw+buttonw2/2},#{totalh-buttonh})")
+backbutton = backbuttong.append("rect")
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", buttonw2)
+          .attr("height", buttonh)
+          .attr("fill", d3.rgb(254, 102, 254))
+          .attr("stroke", "black")
+          .attr("stroke-width", 1)
+          .attr("opacity", 0)
+backbuttong.append("text")
+          .attr("x", buttonw2/2)
+          .attr("y", buttonh/2)
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "middle")
+          .text("Back")
+          .style("font-size", "28px")
+          .style("pointer-events", "none")
+
 
 # function that does all of the work
 draw = (data) ->
@@ -91,6 +114,21 @@ draw = (data) ->
     effpanel = svg.append("g").attr("id", "random_effpanel")
 
     drawRandom(data, col)
+
+  backbutton.on "click", ->
+    col--
+    col = 0 if col < 0
+
+    lodpanel.remove()
+    effpanel.remove()
+    
+    lodpanel = svg.append("g").attr("id", "random_lodpanel")
+    effpanel = svg.append("g").attr("id", "random_effpanel")
+
+    drawRandom(data, col)
+
+  backbutton.on("mouseover", -> d3.select(this).transition().duration(250).attr("opacity", 1))
+            .on("mouseout", -> d3.select(this).transition().duration(1000).attr("opacity", 0))
 
 # function that does all of the work
 drawRandom = (data, column) ->
