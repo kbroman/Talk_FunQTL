@@ -8,7 +8,7 @@ thetime <- 32
 
 # marker index within lod curves
 map <- pull.map(spal)
-out <- out[,c(1,2,thetime)]
+out <- scanone(spal, phe=thetime, method="hk")
 names(out)[3] <- "lod"
 outspl <- split(out, out[,1])
 mar <- map

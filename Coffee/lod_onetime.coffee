@@ -74,10 +74,10 @@ draw = (data) ->
   effpanel = svg.append("g").attr("id", "effpanel")
 
   # jitter amounts for PXG plot
-  jitterAmount = (w[1])/50
+  jitterAmount = (w[1])/40
   jitter = []
   for i of data.phevals
-    jitter[i] = (2.0*Math.random()-1.0) * jitterAmount
+    jitter[i] = (2.0*Math.random()-1.0) * jitterAmount*2
 
   # gray backgrounds
   lodpanel.append("rect")
@@ -120,7 +120,7 @@ draw = (data) ->
   # vertical scales
   lodyScale = d3.scale.linear()
 #                .domain([0, maxLod])
-                .domain([0, 5.4])  # hard-coded maximum so this and the non-randomized version have same scale
+                .domain([0, 5.5])  # hard-coded maximum so this and the non-randomized version have same scale
                 .range([pad.top+h-pad.inner, pad.top+pad.inner])
   effyScale = d3.scale.linear()
                 .domain([minPhe, maxPhe])
