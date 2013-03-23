@@ -55,7 +55,7 @@ lodpanel = svg.append("g").attr("id", "random_lodpanel")
 effpanel = svg.append("g").attr("id", "random_effpanel")
 
 permbuttong = svg.append("g").attr("id", "random_permutebutton")
-                .attr("transform", "translate(#{totalw-buttonw},#{totalh-buttonh})")
+                .attr("transform", "translate(0,#{totalh-buttonh})")
 permbutton = permbuttong.append("rect")
           .attr("x", 0)
           .attr("y", 0)
