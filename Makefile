@@ -1,4 +1,4 @@
-mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png
+mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png Figs/perm_hist.png
 
 presentation.html: index.html js css/kbroman_talk.css css/kbroman_presentation.css
 	Perl/create_presentation.pl
@@ -37,6 +37,9 @@ Figs/riself.png: R/riself_fig.R R/meiosis_func.R R/colors.R
 
 Figs/geno_pheno.png: R/geno_pheno_fig.R R/colors.R R/spal.RData R/my_geno_image.R
 	cd R;R CMD BATCH --no-save geno_pheno_fig.R
+
+Figs/perm_hist.png: R/perm_hist.R R/colors.R R/spal.RData
+	cd R;R CMD BATCH --no-save perm_hist.R
 
 webhtml:
 	scp *.html broman-7:public_html/presentations/FunQTL/

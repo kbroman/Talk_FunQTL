@@ -13,3 +13,4 @@ Data/onetime.json
 Data/onetime_random.json
 Data/all_lod.json
 R/*.Rout
+R/perm.RData
