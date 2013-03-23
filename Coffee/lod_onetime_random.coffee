@@ -2,43 +2,102 @@
 #
 # This is awful code; I just barely know what I'm doing.
 
+# set up svg
+# colors
+darkBlue = "darkslateblue"
+lightGray = d3.rgb(230, 230, 230)
+darkGray = d3.rgb(200, 200, 200)
+pink = "hotpink"
+altpink = "#E9CFEC"
+purple = "#8C4374"
+darkRed = "crimson"
+# bgcolor = "black"
+labelcolor = "white"
+titlecolor = "Wheat"
+maincolor = "Wheat"
+
+# rounding functions
+nodig = d3.format(".0f")
+onedig = d3.format(".1f")
+twodig = d3.format(".2f")
+
+# Circle radius in plotPXG
+peakRad = 2
+bigRad = 5
+
+# dimensions of SVG
+w = [800, 200]
+h = 500
+pad = {left:60, top:40, right:10, bottom: 60, inner: 5}
+totalw = w[0]+w[1]+pad.left*2+pad.right*2
+totalh = h + pad.top + pad.bottom
+
+left = [pad.left, 2*pad.left + w[0] + pad.right]
+
+bigCircRad = "4"
+medCircRad = "4"
+smCircRad =  "2"
+tinyRad = "1"
+
+# permute button
+buttonw = 170
+buttonh = 40
+totalh += buttonh + pad.bottom/2
+
+# create svg
+svg = d3.select("div#lod_onetime_random_fig")
+        .append("svg")
+        .attr("height", totalh)
+        .attr("width", totalw)
+
+# groups for the two panels, translated to have origin = (0,0)
+lodpanel = svg.append("g").attr("id", "random_lodpanel")
+effpanel = svg.append("g").attr("id", "random_effpanel")
+
+permbuttong = svg.append("g").attr("id", "random_permutebutton")
+                .attr("transform", "translate(#{totalw-buttonw},#{totalh-buttonh})")
+permbutton = permbuttong.append("rect")
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", buttonw)
+          .attr("height", buttonh)
+          .attr("fill", d3.rgb(102, 254, 102))
+          .attr("stroke", "black")
+          .attr("stroke-width", 1)
+permbuttong.append("text")
+          .attr("x", buttonw/2)
+          .attr("y", buttonh/2)
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "middle")
+          .text("Randomize!")
+          .style("font-size", "28px")
+          .style("pointer-events", "none")
+
+
 # function that does all of the work
-drawRandom = (data) ->
+draw = (data) ->
+  col = 0
 
-  # colors
-  darkBlue = "darkslateblue"
-  lightGray = d3.rgb(230, 230, 230)
-  darkGray = d3.rgb(200, 200, 200)
-  pink = "hotpink"
-  altpink = "#E9CFEC"
-  purple = "#8C4374"
-  darkRed = "crimson"
-  # bgcolor = "black"
-  labelcolor = "white"
-  titlecolor = "Wheat"
-  maincolor = "Wheat"
+  drawRandom(data, col)
 
-  # rounding functions
-  nodig = d3.format(".0f")
-  onedig = d3.format(".1f")
-  twodig = d3.format(".2f")
+  permbutton.on "click", ->
+    col++
+    col = 1 if col >= data.phevals.length
 
-  # Circle radius in plotPXG
-  peakRad = 2
-  bigRad = 5
+    lodpanel.remove()
+    effpanel.remove()
+    
+    lodpanel = svg.append("g").attr("id", "random_lodpanel")
+    effpanel = svg.append("g").attr("id", "random_effpanel")
 
-  # dimensions of SVG
-  w = [800, 200]
-  h = 500
-  pad = {left:60, top:40, right:10, bottom: 60, inner: 5}
-  totalw = w[0]+w[1]+pad.left*2+pad.right*2
-  totalh = h + pad.top + pad.bottom
+    drawRandom(data, col)
 
-  left = [pad.left, 2*pad.left + w[0] + pad.right]
+# function that does all of the work
+drawRandom = (data, column) ->
 
   # max LOD and min/max phenotype
-  minPhe = d3.min(data.phevals)
-  maxPhe = d3.max(data.phevals)
+  minPhe = d3.min(data.phevals[column])
+  maxPhe = d3.max(data.phevals[column])
   maxLod = 0
   maxLod_marker = ""
   maxLodByChr = {}
@@ -47,10 +106,10 @@ drawRandom = (data) ->
   for chr in data.chr
     maxLodByChr[chr] = 0
     maxLodByChr_marker[chr] = ""
-    for lod in data.lod[chr].lod
+    for lod in data.lod[chr].lod[column]
       maxLod = lod if maxLod < lod  # overall maximum LOD
     for m of data.markerindex[chr]
-      lod = data.lod[chr].lod[data.markerindex[chr][m]]
+      lod = data.lod[chr].lod[column][data.markerindex[chr][m]]
       if lod > maxLodByChr[chr]
         maxLodByChr[chr] = lod  # max LOD by chromosome, among marker positions
         maxLodByChr_marker[chr] = m
@@ -58,25 +117,11 @@ drawRandom = (data) ->
         tmp = lod
         maxLod_marker = m  # marker with maximum LOD
 
-  bigCircRad = "4"
-  medCircRad = "4"
-  smCircRad =  "2"
-  tinyRad = "1"
-
-  # create svg
-  svg = d3.select("div#lod_onetime_random_fig")
-          .append("svg")
-          .attr("height", totalh)
-          .attr("width", totalw)
-
-  # groups for the two panels, translated to have origin = (0,0)
-  lodpanel = svg.append("g").attr("id", "random_lodpanel")
-  effpanel = svg.append("g").attr("id", "random_effpanel")
 
   # jitter amounts for PXG plot
   jitterAmount = (w[1])/50
   jitter = []
-  for i of data.phevals
+  for i of data.phevals[column]
     jitter[i] = (2.0*Math.random()-1.0) * jitterAmount
 
   # gray backgrounds
@@ -283,7 +328,7 @@ drawRandom = (data) ->
   lodcurve = (chr) ->
       d3.svg.line()
         .x((d) -> lodxScale[chr](d))
-        .y((d,i) -> lodyScale(data.lod[chr].lod[i]))
+        .y((d,i) -> lodyScale(data.lod[chr].lod[column][i]))
 
   curves = lodpanel.append("g").attr("id", "random_curves")
   dotsAtMarkers = lodpanel.append("g").attr("id", "random_dotsAtMarkers")
@@ -338,7 +383,7 @@ drawRandom = (data) ->
       # calculate group averages
       for i of data.geno[marker]
          g = Math.abs(data.geno[marker][i])
-         means[g-1] += data.phevals[i]
+         means[g-1] += data.phevals[column][i]
          n[g-1]++
       for i of means
         means[i] /= n[i]
@@ -361,7 +406,7 @@ drawRandom = (data) ->
 
       effpanel.append("g").attr("id", "random_plotPXG")
           .selectAll("empty")
-          .data(data.phevals)
+          .data(data.phevals[column])
           .enter()
           .append("circle")
           .attr("class", "random_plotPXG")
@@ -393,7 +438,7 @@ drawRandom = (data) ->
       # calculate group averages
       for i of data.geno[marker]
          g = Math.abs(data.geno[marker][i])
-         means[g-1] += data.phevals[i]
+         means[g-1] += data.phevals[column][i]
          n[g-1]++
       for i of means
         means[i] /= n[i]
@@ -405,7 +450,7 @@ drawRandom = (data) ->
           .attr("y2", (d) -> effyScale(d))
 
       svg.selectAll("circle.random_plotPXG")
-         .data(data.phevals)
+         .data(data.phevals[column])
          .transition().duration(1000)
          .attr("cx", (d,i) ->
               g = Math.abs(data.geno[marker][i])
@@ -435,7 +480,7 @@ drawRandom = (data) ->
           .enter()
           .append("circle")
           .attr("cx", (d) -> lodxScale[chr](data.lod[chr].pos[data.markerindex[chr][d]]))
-          .attr("cy", (d) -> lodyScale(data.lod[chr].lod[data.markerindex[chr][d]]))
+          .attr("cy", (d) -> lodyScale(data.lod[chr].lod[column][data.markerindex[chr][d]]))
           .attr("r", tinyRad)
           .attr("fill", pink)
           .attr("stroke", "none")
@@ -447,7 +492,7 @@ drawRandom = (data) ->
           .attr("class", "random_markerCircle")
           .attr("id", (d) -> "random_circ#{markerchr[d]}_#{data.markerindex[markerchr[d]][d]}")
           .attr("cx", (d) -> lodxScale[chr](data.lod[chr].pos[data.markerindex[chr][d]]))
-          .attr("cy", (d) -> lodyScale(data.lod[chr].lod[data.markerindex[chr][d]]))
+          .attr("cy", (d) -> lodyScale(data.lod[chr].lod[column][data.markerindex[chr][d]]))
           .attr("r", bigCircRad)
           .attr("fill", purple)
           .attr("stroke", "none")
@@ -484,4 +529,4 @@ drawRandom = (data) ->
   d3.select("circle#random_circ#{chr}_#{index}").attr("opacity", 1).attr("fill",altpink).attr("stroke",purple)
 
 # load json file and call draw function
-d3.json("Data/onetime_random.json", drawRandom)
+d3.json("Data/onetime_random.json", draw)
