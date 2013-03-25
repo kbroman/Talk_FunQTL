@@ -1,4 +1,4 @@
-mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png Figs/perm_hist.png Figs/slod_mlod.png
+mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png Figs/perm_hist.png Figs/slod_mlod.png Figs/forwsel1.png
 
 presentation.html: index.html js css/kbroman_talk.css css/kbroman_presentation.css
 	Perl/create_presentation.pl
@@ -43,6 +43,9 @@ Figs/perm_hist.png: R/perm_hist.R R/colors.R R/spal.RData
 
 Figs/slod_mlod.png: R/slod_mlod_fig.R R/colors.R R/my_plot_scanone.R
 	cd R;R CMD BATCH --no-save slod_mlod_fig.R
+
+Figs/forwsel1.png: R/forwsel.R R/colors.R R/my_plot_scanone.R
+	cd R;R CMD BATCH --no-save forwsel.R
 
 webhtml:
 	scp *.html broman-7:public_html/presentations/FunQTL/
