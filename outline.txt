@@ -1,47 +1,47 @@
 
 -1. Title
 
--3. Mice
+-2. Mice
 
--4. Mouse and human
+-3. Mouse and human
 
--5. Movie
+-4. Movie
 
--6. RIL
+-5. RIL
 
--7. phenotypes, genotypes
+-6. phenotypes, genotypes
 
--8. fancier picture of phenotypes
+-7. fancier picture of phenotypes
 
--9. Fancy picture of QTL analysis of a single phenotype
+-8. Fancy picture of QTL analysis of a single phenotype
 
--10. Fancy picture with randomized phenotype
+-9. Fancy picture with randomized phenotype
 
--11. Permutation distribution of genome-wide maximum LOD
+-10. Permutation distribution of genome-wide maximum LOD
 
-12. Methods for dealing with outcomes measured over time
+11. Methods for dealing with outcomes measured over time
    - Consider each time point individually
    - Consider each time point individually,
      and then combine the results across times
    - fit model and treat parameters as phenotypes
    - nonparmetric version; treat coefficients as phenotypes
 
--13. Fancy picture the LOD curves at each time point
+-12. Fancy picture the LOD curves at each time point
 
-14. Combining across time (methods)
+13. Combining across time (methods)
 
-15. Results
+14. Results
 
-16. Multiple QTL analysis: why?
+15. Multiple QTL analysis: why?
 
-17. Broman & Speed for additive QTL
+16. Broman & Speed for additive QTL
 
-18. Results, considering each time point individually
+17. Results, considering each time point individually
 
-19. Multiple-QTL analysis, combining across time points
+18. Multiple-QTL analysis, combining across time points
 
-20. Results
+19. Results
 
-21. Summary & Future work
+20. Summary & Future work
 
-22. Acknowledgments
+21. Acknowledgments
