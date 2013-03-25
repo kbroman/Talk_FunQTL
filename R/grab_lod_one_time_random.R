@@ -53,5 +53,6 @@ cat0a("\"markers\" :\n", toJSON(markers), ",\n\n")
 dimnames(phem) <- NULL
 cat0a("\"phevals\" :\n", toJSON(t(phem), digits=6), ",\n\n")
 cat0a("\"geno\" :\n", toJSON(spali), ",\n\n")
-cat0a("\"individuals\" :\n", toJSON(individuals), "\n\n")
+cat0a("\"individuals\" :\n", toJSON(individuals), ",\n\n")
+cat0a("\"jitter\" :\n", toJSON(runif(nind(spal), -1, 1)), "\n\n")
 cat0a("}\n")
