@@ -17,7 +17,7 @@ par(las=1,fg="white",col="white",col.axis="white",col.lab="white",
     bg=bgcolor, lwd=2, mfrow=c(1,2))
 
 my.geno.image(spal, ylab="", main="")
-title(main="Genotypes", col.main=color[7], mgp=c(3, 0, 0), line=2.5)
+title(main="Genotypes", col.main="Wheat", mgp=c(3, 0, 0), line=2.5)
 
 # plot of phenotype
 phe <- spal$pheno
@@ -34,9 +34,9 @@ rect(u[1], u[3], u[2], u[4], col="gray80")
 abline(h=seq(-120, 0, by=20), v=c(2,4,6), col="white")
 for(i in 1:nrow(phe))
   lines(times, phe[i,], col="gray50", lwd=1)
-lines(times, pheave, col=color[4], lwd=2)
+lines(times, pheave, col="#55ED55", lwd=2)
 
-title(main="Phenotypes", col.main=color[7], mgp=c(3, 0, 0), line=2.5)
+title(main="Phenotypes", col.main="Wheat", mgp=c(3, 0, 0), line=2.5)
 
 
 dev.off()
