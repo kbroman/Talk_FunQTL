@@ -1,8 +1,6 @@
 
 -1. Title
 
-x2. About me
-
 -3. Mice
 
 -4. Mouse and human
@@ -23,17 +21,19 @@ x2. About me
 
 12. Methods for dealing with outcomes measured over time
    - Consider each time point individually
+   - Consider each time point individually,
+     and then combine the results across times
    - fit model and treat parameters as phenotypes
    - nonparmetric version; treat coefficients as phenotypes
 
--13. Fancy picture of that  (or maybe *just* do the fancy version?)
+-13. Fancy picture the LOD curves at each time point
 
-14. Simple methods of combining across time
+14. Combining across time (methods)
 
 15. Results
 
 16. Multiple QTL analysis: why?
-    
+
 17. Broman & Speed for additive QTL
 
 18. Results, considering each time point individually
@@ -45,7 +45,3 @@ x2. About me
 21. Summary & Future work
 
 22. Acknowledgments
-
-
-
-
