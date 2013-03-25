@@ -438,16 +438,73 @@ consideration of multiple-QTL models.
 <section>
 <h3>Broman & Speed (2002)</h3>
 
+<p class="gray" style="margin-left:125px;margin-top:75px;">Among additive QTL models, maximize</p>
+
+<div align="center" style="margin-top:30px;"><p class="highlight">pLOD(&gamma;) = LOD(&gamma;) &ndash; T &times; |&gamma;|
+</div>
+
+<p class="lowlight" style="margin-left:600px;margin-top:150px;">
+&gamma; = a multiple-QTL model</p>
+
+<p class="lowlight" style="margin-left:600px;margin-top:-20px;">
+|&gamma;| = no. QTL in the model</p>
+
+<p class="lowlight" style="margin-left:600px;margin-top:-20px;">
+T = significance threshold</p>
 
 
+<p class="codelink">
+<a class="gray" href="http://www.biostat.wisc.edu/~kbroman/publications/jrssb.pdf">KW Broman, TP Speed (2002) J Roy Stat Soc B 64:641-656</a>
+</p>
 
 <aside>
-Explain.
+The key issue in choosing among multiple-QTL models is the criterion
+for comparing models.<br><br>
+
+If you add a QTL to a model, the LOD score will increase; how much of
+an increase in LOD should be required to select the additonal
+QTL?<br><br>
+
+We seek to balance model fit with model complexity.<br><br>
+
+In particular, we use as penalty the significance threshold from a
+single-QTL scan, derived via a permutation test.
 </aside>
 
 <p class="pg">15</p></section>
 </section>
 
+
+
+<section>
+<h3>Broman & Speed (2002)</h3>
+
+<p class="gray" style="margin-left:125px;margin-top:75px;">Among additive QTL models, maximize</p>
+
+<div align="center" style="margin-top:30px;"><p class="highlight">pLOD<sub>t</sub>(&gamma;) = LOD<sub>t</sub>(&gamma;) &ndash; T &times; |&gamma;|
+</div>
+
+<p class="lowlight" style="margin-left:600px;margin-top:150px;">
+&gamma; = a multiple-QTL model</p>
+
+<p class="lowlight" style="margin-left:600px;margin-top:-20px;">
+|&gamma;| = no. QTL in the model</p>
+
+<p class="lowlight" style="margin-left:600px;margin-top:-20px;">
+T = significance threshold</p>
+
+
+<p class="codelink">
+<a class="gray" href="http://www.biostat.wisc.edu/~kbroman/publications/jrssb.pdf">KW Broman, TP Speed (2002) J Roy Stat Soc B 64:641-656</a>
+</p>
+
+<aside>
+We can apply this approach to each time, individually, by just adding
+&ldquo;t.&rdquo;
+</aside>
+
+<p class="pg">15</p></section>
+</section>
 
 
 <section>
@@ -546,7 +603,7 @@ the two-QTL model (with just the QTL on chr 3 and 4).
 Explain.
 </aside>
 
-<p class="pg">16</p></section>
+<p class="pg">18</p></section>
 </section>
 
 
@@ -554,12 +611,31 @@ Explain.
 <section>
 <h3>Broman & Speed (2002)<font class="lowlight">, extended</font></h3>
 
+<p class="gray" style="margin-left:125px;margin-top:75px;">Among additive QTL models, maximize</p>
+
+<div align="center" style="margin-top:30px;">
+<p class="highlight">pSLOD(&gamma;) = ave<sub>t</sub> LOD<sub>t</sub>(&gamma;) &ndash; T<sub>S</sub> &times; |&gamma;|</p>
+<p class="highlight">pMLOD(&gamma;) = max<sub>t</sub> LOD<sub>t</sub>(&gamma;) &ndash; T<sub>M</sub> &times; |&gamma;|</p>
+</div>
+
+
+<p class="lowlight" style="margin-left:600px;margin-top:150px;">
+&gamma; = a multiple-QTL model</p>
+
+<p class="lowlight" style="margin-left:600px;margin-top:-20px;">
+|&gamma;| = no. QTL in the model</p>
+
+<p class="lowlight" style="margin-left:600px;margin-top:-20px;">
+T = penalties</p>
+
 
 <aside>
-Explain.
+The Broman & Speed idea can be immediately extended to combine the
+information across time points by just inserting SLOD or
+MLOD in place of LOD<sub>t</sub>.
 </aside>
 
-<p class="pg">17</p></section>
+<p class="pg">19</p></section>
 </section>
 
 
@@ -574,7 +650,7 @@ Explain.
 Explain.
 </aside>
 
-<p class="pg">18</p></section>
+<p class="pg">20</p></section>
 </section>
 
 
@@ -582,13 +658,23 @@ Explain.
 <section>
 <h3>Summary</h3>
 
-
+<ul class="tight" style="margin-top:75px;">
+  <li>We have focused on the simplest approaches to QTL analysis with a
+  phenotype measured over time.</li>
+       <ul class="lowlight">
+       <li>Consider each time point individually.</li>
+       <li>Combine across time by taking the average or maximum
+  LOD.</li>
+     </ul>
+  <li>We extended the approach for multiple-QTL models.</li>
+  <li>Interactive graphs are useful and fun.</li>
+</ul>
 
 <aside>
 It's always good to have a summary slide.
 </aside>
 
-<p class="pg">19</p></section>
+<p class="pg">21</p></section>
 </section>
 
 
@@ -623,10 +709,12 @@ It's always good to have a summary slide.
 <aside>
 This work is in collaboration with <a
 href="http://www.botany.wisc.edu/spalding.htm">Edgar Spalding</a> and
-colleagues, and my graduate student, Il-youp Kwak.
+colleagues, and my graduate student, Il-youp Kwak.<br><br>
+
+The work was supported in part by a grant from the NIH.
 </aside>
 
-<p class="pg">20</p></section>
+<p class="pg">22</p></section>
 
 
 
