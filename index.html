@@ -65,10 +65,15 @@ differences.
 <img style="position:fixed;bottom: 0px; left:0px; z-index: -1;" width="1280px" src="Figs/inbredmice.jpg" />
 
 <aside>
-I first need to provide a bit of context.  My research concerns
-genetics, and I focus particularly on mouse genetics.<br><br> I think
-these are <a href="http://jaxmice.jax.org/strain/000689.html">SWR
-mice</a>; the photo is from <a
+This talk is for a symposium on plant breeding, so I should start by
+emphasizing that I focus mostly on mouse genetics.  The goals for QTL
+analysis in plant breeding and in mouse genetics can be quite
+different, and so the appropraite methods can be quite
+different.<br><br>
+
+I think these are <a
+href="http://jaxmice.jax.org/strain/000689.html">SWR mice</a>; the
+photo is from <a
 href="http://cals.ncsu.edu/genetics/index.php/people/david-threadgill/">David
 Threadgill</a>.
 </aside>
@@ -110,7 +115,15 @@ href="http://www.daviddeen.com">David Deen</a>.
 </a></div>
 
 <aside>
-Click on the image to see a movie.<br><br>
+This work was motivated by (and will be illustrated through) data from
+a collaboration with Edgar Spalding and colleagues, on <a
+href="http://en.wikipedia.org/wiki/Gravitropism">gravitropism</a> in
+Arabidopsis.<br><br>
+
+A seedling was sprouted, and rotated 90 degrees, and then the response
+followed with a camera.<br><br>
+
+Click on the image to see the movie.<br><br>
 
 You&rsquo;ll be popped to a separate page; you&rsquo;ll need to navigate back.
 </aside>
@@ -132,10 +145,11 @@ You&rsquo;ll be popped to a separate page; you&rsquo;ll need to navigate back.
 
 
 <aside>
-Recombinant inbred lines are formed by crossing two inbred strains
-followed by repeated inbreeding (in plants, generally by selfing).
-The result is a set of new inbred lines whose genomes are mosaics of
-the original two lines.
+The data concern a set of 162 recombinant inbred lines (RIL).<br><br>
+
+RIL are formed by crossing two inbred strains followed by repeated
+inbreeding (in plants, generally by selfing).  The result is a set of
+new inbred lines whose genomes are mosaics of the original two lines.
 </aside>
 
 
@@ -159,7 +173,7 @@ the original two lines.
 
 <aside>
 The data consist of marker genotypes (AA vs BB) for each line at a set
-of markers across the genome, and a phenotype (&ldquo;tip angle&rquo;)
+of markers across the genome, and a phenotype (&ldquo;tip angle&rdquo;)
 measured over time for each line.
 </aside>
 
@@ -206,7 +220,11 @@ be removed.
 <div id="lod_onetime_fig" style="margin-left:-30px;"></div>
 
 <aside>
-LOD curves and QTL effect plot for a single time point.
+LOD curves and QTL effect plot for a single time point.<br><br>
+
+The LOD score at a genomic position is a measure of association
+between genotype and phenotype: Is there evidence for a QTL in the
+region?
 </aside>
 
 
@@ -228,6 +246,14 @@ LOD curves and QTL effect plot for a single time point.
 <div id="lod_onetime_random_fig" style="margin-left:-30px;"></div>
 
 <aside>
+This is an illustration of a permutation test: To assess whether a
+given LOD score is sufficiently large to indicate evidence of a QTL,
+we compare it to the distribution of the genome-wide maximum LOD score
+under the null hypothesis of no QTL.<br><br>
+
+The null distribution of the genome-wide maximum LOD is estimated by
+permuting the phenotypes relative to the genotypes.<br><br>
+
 Click the green button to shuffle the phenotypes and re-draw the LOD
 curves.<br><br>
 
@@ -288,6 +314,9 @@ exceeding that value.
 </div>
 
 <aside>
+[This is a static shot; click the link in the lower-left to see the
+dynamic version.]<br><br>
+
 The top-left plot is a &ldquo;heat map&rdquo; of the LOD scores
 for each time point at each genomic position.  LOD scores are also
 colored to indicate the sign of the QTL effect, with red indicating
@@ -303,9 +332,6 @@ position are shown to the right.<br><br>
 Click on a point to show pointwise confidence bands on the QTL
 effect (&plusmn; 2 SE).  (We require a mouse click, as otherwise the graph
 was painfully slow to refresh.)
-
-[This is a static shot; click the link in the lower-left to see the
-dynamic version.]<br><br>
 </aside>
 
 
@@ -367,10 +393,10 @@ individually, and then combine the results.
 <aside>
 Results for single-QTL analysis with SLOD and MLOD.<br><br>
 
-SLOD: infer QTL on chr 1 and 4; another nearly significant on chr
-5.<br><br>
+With SLOD, we infer that there are QTL on chr 1 and 4.  There is
+nearly significant evidece for another QTL, on chr 5.<br><br>
 
-MLOD: infer QTL on chr 1, 3, and 4.
+With MLOD, we infer that there are QTL on chr 1, 3, and 4.
 </aside>
 
 <p class="pg">13</p></section>
@@ -394,7 +420,7 @@ There are three main reasons that one should consider multiple-QTL
 models.<br><br>
 
 First, by controlling for major loci, one can increase power to detect
-more modest loci<br><br>
+more modest loci.<br><br>
 
 Second, to determine whether there are two QTL on a chromosome,
 one should fit a two-QTL model and compare it to the best
@@ -432,7 +458,11 @@ Explain.
 </div>
 
 <aside>
-Explain.
+Here we illustrate the forward selection process for tip angle at 62
+min.<br><br>
+
+The first step is just to perform a genome scan with a single-QTL
+model.  We find a QTL on chromosome 4.
 </aside>
 
 <p class="pg">16</p></section>
@@ -446,7 +476,10 @@ Explain.
 </div>
 
 <aside>
-Explain.
+In the second step of forward selection, we scan for an additional
+QTL, conditional on the identified QTL on chr 4.<br><br>
+
+We have evidence for a second QTL on chr 3.
 </aside>
 
 <p class="pg">16</p></section>
@@ -460,7 +493,16 @@ Explain.
 </div>
 
 <aside>
-Explain.
+We then do another genome scan, conditional on the selected QTL on chr
+3 and 4.<br><br>
+
+The next-highest peak is on chr 1, but it doesn't meet the threshold,
+so we stop.<br><br>
+
+In practice, we use forward selection to a large model (say 10 QTL)
+and then do the reverse (&ldquo;backward delection&rdquo;) back down
+to the null model, and we select the model with maximum pLOD, among
+all models considered.
 </aside>
 
 <p class="pg">16</p></section>
@@ -474,7 +516,20 @@ Explain.
 </div>
 
 <aside>
-Explain.
+In this figure, we display the &ldquo;profile LOD curves&rdquo; for
+the selected model (with QTL on chr 3 and 4).<br><br>
+
+The LOD curve on chr 3 compares the two-QTL model (with QTL on chr 3
+and 4, varying the location of the QTL on chr 3 but keeping the QTL on
+chr 4 fixed at its peak location) to the single-QTL model (with just
+the QTL on chr 4).<br><br>
+
+Similarly, the LOD curve on chr 4 compares the two-QTL model to the
+single-QTL model with just the QTL on chr 3.<br><br>
+
+The curves on the other chromosome are for a comparison of a three-QTL
+model (with a third QTL added to the model with QTL on chr 3 and 4) to
+the two-QTL model (with just the QTL on chr 3 and 4).
 </aside>
 
 <p class="pg">17</p></section>
