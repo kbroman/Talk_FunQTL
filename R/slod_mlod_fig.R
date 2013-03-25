@@ -13,7 +13,7 @@ png(file="../Figs/slod_mlod.png", width=1100, height=650, pointsize=24)
 par(fg="white",col="white",col.axis="white",col.lab="white",
     bg=bgcolor, mar=c(3.4, 3.1, 0.6, 0.6))
 
-my.plot.scanone(out, lod=243, bandcol="gray80", col=color[2], ylab="", bg="gray70",
+my.plot.scanone(out, lod=243, bandcol="gray70", col=color[2], ylab="", bg="gray80",
                 yaxt="n", xlab="")
 my.plot.scanone(out, lod=242, col=color[1], add=TRUE)
 title(xlab="Chromosome", mgp=c(2, 0, 0), col.lab="Wheat")
