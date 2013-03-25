@@ -42,7 +42,10 @@ for(k in 1:n.step) {
 #  }
   
   title(xlab="Chromosome", mgp=c(2, 0, 0), col.lab="Wheat")
-  title(ylab="LOD score", mgp=c(1.6, 0, 0), col.lab="Wheat")
+  if(k==1)
+    title(ylab="LOD score", mgp=c(1.6, 0, 0), col.lab="Wheat")
+  else
+    title(ylab="Conditional LOD score", mgp=c(1.6, 0, 0), col.lab="Wheat")
   title(main=paste("Step", k), col.main="Wheat", line=1)
   axis(side=2, at=0:6, tick=FALSE, mgp=c(0, 0.3, 0), las=1)
 
