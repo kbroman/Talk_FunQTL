@@ -162,7 +162,7 @@ drawRandom = (data, column) ->
   jitterAmount = (w[1])/40
   jitter = []
   for i of data.phevals[column]
-    jitter[i] = (2.0*Math.random()-1.0) * jitterAmount*2
+    jitter[i] = data.jitter[i] * jitterAmount*2
 
   # gray backgrounds
   lodpanel.append("rect")
