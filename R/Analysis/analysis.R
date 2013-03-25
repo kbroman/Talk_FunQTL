@@ -23,7 +23,10 @@ library(parallel)
 f <- function(i) {
   outsq <- stepwiseqtl(spal, phe=i, method="hk", additive.only=TRUE,
                             penalties=thr[i], verb=FALSE, keeplodprofile=TRUE)
-  attr(outsq, "addqtl") <- addqtl(spal, phe=i, method="hk", qtl=outsq)
+  if(is.null(outsq) || length(outsq)==0)
+    attr(outsq, "addqtl") <- scanone(spal, phe=i, method="hk")
+  else 
+    attr(outsq, "addqtl") <- addqtl(spal, phe=i, method="hk", qtl=outsq)
   outsq
 }
   
@@ -31,6 +34,11 @@ f <- function(i) {
 # run stepwise
 outsq <- mclapply(1:nphe(spal), f, mc.cores=24)
 save(outsq, file="outsq.RData")
+
+# run stepwise with more stringent threshold
+thr <- rep(thr[length(thr)], nphe(spal))
+outsq2 <- mclapply(1:nphe(spal), f, mc.cores=24)
+save(outsq2, file="outsq2.RData")
 
 
 ######################################################################
@@ -101,6 +109,28 @@ for(j in seq(along=maxqtl)) {
   attr(maxqtl[[j]], "lod") <- max(unlist(mclapply(1:nphe(spal), ffq, theqtl=maxqtl[[j]], mc.cores=24)))
   attr(maxqtl[[j]], "plod") <- attr(maxqtl[[j]], "lod") - j*thr[243]
 }
+
+# for meanqtl[[3]], include profile LOD
+# get profile LOD
+prof <- vector("list", nphe(spal))
+for(i in seq(along=prof))
+  prof[[i]] <- attr(refineqtl(spal, phe=i, method="hk", qtl=meanqtl[[3]], verbose=FALSE), "lodprofile")
+meanprof <- prof[[1]]
+for(j in 1:3) {
+  tmp <- matrix(ncol=length(prof), nrow=nrow(prof[[1]][[j]]))
+  for(i in seq(along=prof))
+    tmp[,i] <- prof[[i]][[j]][,3]
+  meanprof[[j]][,3] <- rowMeans(tmp)
+}
+attr(meanqtl[[3]], "lodprofile") <- meanprof
+
+# also, for meanqtl[[3]], get estimated effects
+eff <- matrix(nrow=nphe(spal), ncol=length(meanqtl[[3]]$chr))
+for(i in 1:nphe(spal)) {
+  tmp <- fitqtl(spal, qtl=meanqtl[[3]], phe=i, dropone=FALSE, method="hk", get.ests=TRUE)
+  eff[i,] <- tmp[[2]]$ests[-1]
+}
+attr(meanqtl[[3]], "effects") <- eff
 
 save(meanqtl, file="meanqtl.RData")
 save(maxqtl, file="maxqtl.RData")
