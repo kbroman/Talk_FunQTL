@@ -299,7 +299,7 @@ draw = (data) ->
     thecurve.append("text")
           .datum(ind)
           .text("line #{ind*1+1}") # *1 to turn it into a number
-          .attr("x", xScaleCurve(7*60)+pad.inner)
+          .attr("x", xScaleCurve(7.15*60)+pad.inner)
           .attr("y", (yScaleCurve(0)+yScaleCurve(-20))/2)
           .attr("text-anchor", "start")
           .attr("fill", darkBlue)
