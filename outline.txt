@@ -19,29 +19,27 @@
 
 -10. Permutation distribution of genome-wide maximum LOD
 
-11. Methods for dealing with outcomes measured over time
+-11. Fancy picture the LOD curves at each time point
+
+-12. Methods for dealing with outcomes measured over time
    - Consider each time point individually
    - Consider each time point individually,
      and then combine the results across times
    - fit model and treat parameters as phenotypes
    - nonparmetric version; treat coefficients as phenotypes
 
--12. Fancy picture the LOD curves at each time point
+13. Results
 
-13. Combining across time (methods)
+14. Multiple QTL analysis: why?
 
-14. Results
+15. Broman & Speed for additive QTL
 
-15. Multiple QTL analysis: why?
+16. Results, considering each time point individually
 
-16. Broman & Speed for additive QTL
+17. Multiple-QTL analysis, combining across time points
 
-17. Results, considering each time point individually
+18. Results
 
-18. Multiple-QTL analysis, combining across time points
+19. Summary
 
-19. Results
-
-20. Summary & Future work
-
-21. Acknowledgments
+20. Acknowledgments
