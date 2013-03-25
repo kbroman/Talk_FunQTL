@@ -46,19 +46,21 @@ a.invisiblelink:hover {
 
 
 
-font.gray {
+.gray {
   color: #C8C8C8;
 }
 
-font.small {
+.small {
   font-size: 28px;
 }
 
-font.vsmall {
+.vsmall {
   font-size: 18px;
 }
 
-
+.small sub {
+  font-size: 20px;
+}
 
 
 
