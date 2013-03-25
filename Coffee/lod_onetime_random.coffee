@@ -11,7 +11,7 @@ pink = "hotpink"
 altpink = "#E9CFEC"
 purple = "#8C4374"
 darkRed = "crimson"
-# bgcolor = "black"
+bgcolor = "#181818"
 labelcolor = "white"
 titlecolor = "Wheat"
 maincolor = "Wheat"
@@ -65,7 +65,7 @@ permbutton = permbuttong.append("rect")
           .attr("width", buttonw)
           .attr("height", buttonh)
           .attr("fill", d3.rgb(102, 254, 102))
-          .attr("stroke", "black")
+          .attr("stroke", bgcolor)
           .attr("stroke-width", 1)
 permbuttong.append("text")
           .attr("x", buttonw/2)
@@ -75,6 +75,7 @@ permbuttong.append("text")
           .text("Randomize!")
           .style("font-size", "28px")
           .style("pointer-events", "none")
+          .attr("fill", bgcolor)
 
 backbuttong = svg.append("g").attr("id", "random_backbutton")
                 .attr("transform", "translate(#{buttonw+buttonw2/2},#{totalh-buttonh})")
@@ -84,7 +85,7 @@ backbutton = backbuttong.append("rect")
           .attr("width", buttonw2)
           .attr("height", buttonh)
           .attr("fill", d3.rgb(254, 102, 254))
-          .attr("stroke", "black")
+          .attr("stroke", bgcolor)
           .attr("stroke-width", 1)
           .attr("opacity", 0)
 backbuttong.append("text")
@@ -95,6 +96,7 @@ backbuttong.append("text")
           .text("Back")
           .style("font-size", "28px")
           .style("pointer-events", "none")
+          .attr("fill", bgcolor)
 
 
 # function that does all of the work
@@ -169,7 +171,7 @@ drawRandom = (data, column) ->
           .attr("height", h)
           .attr("width", w[0])
           .attr("fill", lightGray)
-          .attr("stroke", "black")
+          .attr("stroke", bgcolor)
           .attr("stroke-width", 1)
   effpanel.append("rect")
           .attr("x", pad.left*2+pad.right+w[0])
@@ -177,7 +179,7 @@ drawRandom = (data, column) ->
           .attr("height", h)
           .attr("width", w[1])
           .attr("fill", lightGray)
-          .attr("stroke", "black")
+          .attr("stroke", bgcolor)
           .attr("stroke-width", 1)
 
   # start and end of each chromosome
@@ -458,7 +460,7 @@ drawRandom = (data, column) ->
               darkGray)
           .attr("stroke", (d,i) ->
                return purple if data.geno[marker][i] < 0
-               "black")
+               bgcolor)
           .attr("stroke-width", (d,i) ->
                return "2" if data.geno[marker][i] < 0
                "1")
@@ -498,7 +500,7 @@ drawRandom = (data, column) ->
               darkGray)
          .attr("stroke", (d,i) ->
                return purple if data.geno[marker][i] < 0
-               "black")
+               bgcolor)
          .attr("stroke-width", (d,i) ->
                return "2" if data.geno[marker][i] < 0
                "1")
