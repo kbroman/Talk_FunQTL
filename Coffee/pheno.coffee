@@ -44,7 +44,7 @@ draw = (data) ->
 
   # order individuals by average phenotype
   orderedInd = d3.range(nInd).sort (a,b) ->
-    return -1 if avePhe[a] < avePhe[b]
+    return -1 if avePhe[a] > avePhe[b]
     return +1 if avePhe[b] < avePhe[a]
     return 0
 
