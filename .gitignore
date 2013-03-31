@@ -12,6 +12,8 @@ Data/pheno.json
 Data/onetime.json
 Data/onetime_random.json
 Data/all_lod.json
+Data/stepwise.json
+Data/stepwise2.json
 R/*.Rout
 R/perm.RData
 FromIlYoup

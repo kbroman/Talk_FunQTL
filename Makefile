@@ -18,6 +18,12 @@ Data/onetime.json: R/spal.RData R/out.RData R/grab_lod_one_time.R
 Data/onetime_random.json: R/spal.RData R/out.RData R/grab_lod_one_time_random.R
 	cd R;R CMD BATCH grab_lod_one_time_random.R
 
+Data/stepwise.json: R/spal.RData R/Analysis/outsq.RData R/grab_stepwise.R
+	cd R;R CMD BATCH grab_stepwise.R
+
+Data/stepwise2.json: R/spal.RData R/Analysis/outsq2.RData R/grab_stepwise2.R
+	cd R;R CMD BATCH grab_stepwise2.R
+
 js: JS/pheno.js JS/lod_onetime.js JS/lod_onetime_random.js JS/lod_alltimes.js
 
 JS/pheno.js: Coffee/pheno.coffee
