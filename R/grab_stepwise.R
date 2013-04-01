@@ -8,7 +8,11 @@ library(qtl)
 load("spal.RData")
 
 # load scanone results, each time point considered individually
-load("Analysis/outsq.RData")
+ifiles <- c("Analysis/outsq.RData", "Analysis/outsq2.RData")
+ofiles <- c("../Data/stepwise.json", "../Data/stepwise2.json")
+for(ifile in 1:2) {
+load(ifiles[ifile])
+if(ifile == 2) outsq <- outsq2
 
 # times (in minutes)
 times <- as.numeric(substr(phenames(spal), 2, nchar(phenames(spal))))
@@ -83,17 +87,18 @@ for(i in seq(along=qtl)) {
 
 # write data to JSON file
 library(RJSONIO)
-cat0 <- function(...) cat(..., sep="", file="../Data/stepwise.json")
-cat0a <- function(...) cat(..., sep="", file="../Data/stepwise.json", append=TRUE)
-cat0("{\n")
-cat0a("\"chr\" :\n", toJSON(chrnames(spal)), ",\n\n")
-cat0a("\"map\" :\n", toJSON(map, digits=10), ",\n\n")
-cat0a("\"allpmar\" :\n", toJSON(allpmar), ",\n\n")
-cat0a("\"evenpmar\" :\n", toJSON(evenpmar), ",\n\n")
-cat0a("\"pmarindex\" :\n", toJSON(pmarindex), ",\n\n")
-cat0a("\"times\" :\n", toJSON(times), ",\n\n")
-cat0a("\"lodprofile\" :\n", toJSON(lod), ",\n\n")
-cat0a("\"qtl\" :\n", toJSON(qtl), ",\n\n")
-cat0a("\"detailedprof\" :\n", toJSON(detailedprof), ",\n\n")
-cat0a("\"addqtllod\" :\n", toJSON(addqtllod), "\n\n")
-cat0a("}\n")
+cat0 <- function(..., file="blah") cat(..., sep="", file=file)
+cat0a <- function(..., file="blah") cat(..., sep="", file=file, append=TRUE)
+cat0("{\n", file=ofiles[ifile])
+cat0a("\"chr\" :\n", toJSON(chrnames(spal)), ",\n\n", file=ofiles[ifile])
+cat0a("\"map\" :\n", toJSON(map, digits=10), ",\n\n", file=ofiles[ifile])
+cat0a("\"allpmar\" :\n", toJSON(allpmar), ",\n\n", file=ofiles[ifile])
+cat0a("\"evenpmar\" :\n", toJSON(evenpmar), ",\n\n", file=ofiles[ifile])
+cat0a("\"pmarindex\" :\n", toJSON(pmarindex), ",\n\n", file=ofiles[ifile])
+cat0a("\"times\" :\n", toJSON(times), ",\n\n", file=ofiles[ifile])
+cat0a("\"lodprofile\" :\n", toJSON(lod), ",\n\n", file=ofiles[ifile])
+cat0a("\"qtl\" :\n", toJSON(qtl, asIs=TRUE), ",\n\n", file=ofiles[ifile])
+cat0a("\"detailedprof\" :\n", toJSON(detailedprof), ",\n\n", file=ofiles[ifile])
+cat0a("\"addqtllod\" :\n", toJSON(addqtllod), "\n\n", file=ofiles[ifile])
+cat0a("}\n", file=ofiles[ifile])
+}

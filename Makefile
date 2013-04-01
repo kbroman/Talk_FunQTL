@@ -1,7 +1,9 @@
-mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png Figs/perm_hist.png Figs/slod_mlod.png Figs/forwsel1.png Figs/slod_multiqtl.png
+mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png Figs/perm_hist.png Figs/slod_mlod.png Figs/forwsel1.png Figs/slod_multiqtl.png data
 
 presentation.html: index.html js css/kbroman_talk.css css/kbroman_presentation.css
 	Perl/create_presentation.pl
+
+data: Data/pheno.json Data/onetime.json Data/onetime_random.json Data/stepwise.json
 
 R/spal.RData: R/prep_rep1_data.R RawData/rep1_rev.csv
 	cd R;R CMD BATCH prep_rep1_data.R
@@ -18,13 +20,10 @@ Data/onetime.json: R/spal.RData R/out.RData R/grab_lod_one_time.R
 Data/onetime_random.json: R/spal.RData R/out.RData R/grab_lod_one_time_random.R
 	cd R;R CMD BATCH grab_lod_one_time_random.R
 
-Data/stepwise.json: R/spal.RData R/Analysis/outsq.RData R/grab_stepwise.R
+Data/stepwise.json: R/spal.RData R/Analysis/outsq.RData R/grab_stepwise.R R/Analysis/outsq2.RData
 	cd R;R CMD BATCH grab_stepwise.R
 
-Data/stepwise2.json: R/spal.RData R/Analysis/outsq2.RData R/grab_stepwise2.R
-	cd R;R CMD BATCH grab_stepwise2.R
-
-js: JS/pheno.js JS/lod_onetime.js JS/lod_onetime_random.js JS/lod_alltimes.js
+js: JS/pheno.js JS/lod_onetime.js JS/lod_onetime_random.js JS/lod_alltimes.js JS/lod_allprofiles.js
 
 JS/pheno.js: Coffee/pheno.coffee
 	coffee -co JS Coffee/pheno.coffee
@@ -37,6 +36,9 @@ JS/lod_onetime_random.js: Coffee/lod_onetime_random.coffee Data/onetime_random.j
 
 JS/lod_alltimes.js: Coffee/lod_alltimes.coffee
 	coffee -co JS Coffee/lod_alltimes.coffee
+
+JS/lod_allprofiles.js: Coffee/lod_allprofiles.coffee
+	coffee -co JS Coffee/lod_allprofiles.coffee
 
 Figs/riself.png: R/riself_fig.R R/meiosis_func.R R/colors.R
 	cd R;R CMD BATCH --no-save riself_fig.R
