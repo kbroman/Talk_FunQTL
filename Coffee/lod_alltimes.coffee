@@ -125,7 +125,7 @@ draw = (data) ->
     panels[i].append("rect")
              .attr("height", h[i])
              .attr("width", w[i])
-             .attr("fill",  "white")
+             .attr("fill",  lightGray)
              .attr("stroke", "black")
              .attr("stroke-width", 2)
 
@@ -276,7 +276,7 @@ draw = (data) ->
            .attr("x1", 0)
            .attr("x2", w[0])
            .attr("fill", "none")
-           .attr("stroke", "lightGray")
+           .attr("stroke", darkGray)
            .attr("stroke-width", 1)
   panels[0].append("text")
            .text("Time (hours)")
@@ -316,7 +316,7 @@ draw = (data) ->
              .attr("fill", "none")
              .attr("stroke", (d) ->
                 return pink if d == 0 and i==3
-                "lightGray")
+                darkGray)
              .attr("stroke-width", 1)
     panels[i].append("text")
              .text(ytitle[i])
@@ -402,7 +402,7 @@ draw = (data) ->
              .datum(data.times) # every other time, to speed it up
              .attr("d", seArea(pmari))
              .attr("stroke", "none")
-             .attr("fill", "lightblue")
+             .attr("fill", darkBlue)
              .attr("opacity", 0.3)
 
   # lod curve function
@@ -481,7 +481,7 @@ draw = (data) ->
                   .attr("y", 0)
                   .attr("width", wScale)
                   .attr("height", h[1])
-                  .attr("fill", "white")
+                  .attr("fill", lightGray)
                   .attr("stroke", "black")
                   .attr("stroke-width", 2)
   colorScales[0].append("text")
@@ -513,7 +513,7 @@ draw = (data) ->
                  .attr("x1", 0)
                  .attr("x2", wScale)
                  .attr("fill", "none")
-                 .attr("stroke", lightGray)
+                 .attr("stroke", darkGray)
                  .attr("stroke-width", 1)
   colorScales[0].selectAll("empty")
                 .data(ticks[1])
