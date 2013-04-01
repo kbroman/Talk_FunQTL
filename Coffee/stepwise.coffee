@@ -6,7 +6,8 @@ drawStepwise = (data) ->
   d3.select("p#loaded").style("opacity", 1)
 
   # no. pixels per rectangle in heatmap
-  pixelPer = 1.5 # <- I wanted this to be an integer, but I couldn't fit the figure into a talk
+  pixelH = 1.5 # <- I wanted this to be an integer, but I couldn't fit the figure into a talk
+  pixelW = 2   #
 
   # colors
   darkBlue = "darkslateblue"
@@ -66,20 +67,20 @@ drawStepwise = (data) ->
   lodXscale = {}
   for chr in data.chr
     chrStartPixel[chr] = curPixel
-    chrEndPixel[chr] = curPixel + (chrEnd[chr] - chrStart[chr])*pixelPer
-    curPixel = chrEndPixel[chr]+pixelPer*2
+    chrEndPixel[chr] = curPixel + (chrEnd[chr] - chrStart[chr])*pixelW
+    curPixel = chrEndPixel[chr]+pixelW*2
     imgXscale[chr] = d3.scale.linear()
                        .domain([chrStart[chr], chrEnd[chr]])
                        .range([chrStartPixel[chr], chrEndPixel[chr]])
     lodXscale[chr] = d3.scale.linear()
                        .domain([chrStart[chr], chrEnd[chr]])
-                       .range([chrStartPixel[chr]+pixelPer/2, chrEndPixel[chr]+pixelPer/2])
+                       .range([chrStartPixel[chr]+pixelW/2, chrEndPixel[chr]+pixelW/2])
 
   # dimensions
   totalpmar = data.evenpmar.length
   pad = {left:50, top:20, right:10, bottom: 30, inner: 2}
-  imgw = pixelPer * (totalpmar + data.chr.length-1)
-  imgh = pixelPer * data.times.length
+  imgw = pixelW * (totalpmar + data.chr.length-1)
+  imgh = pixelH * data.times.length
   lodh = 225
   h = [imgh, lodh]
   w = [imgw, imgw]
@@ -127,7 +128,7 @@ drawStepwise = (data) ->
 
   imgYscale = d3.scale.ordinal()
                 .domain(d3.range(data.times.length))
-                .rangePoints([imgh-pixelPer, 0], 0)
+                .rangePoints([imgh-pixelH, 0], 0)
 
 
   imgZscale = d3.scale.linear()
@@ -148,8 +149,8 @@ drawStepwise = (data) ->
              .append("line")
              .attr("y1", 0)
              .attr("y2", h[i])
-             .attr("x1", (d) -> d-pixelPer*0.5)
-             .attr("x2", (d) -> d-pixelPer*0.5)
+             .attr("x1", (d) -> d-pixelW*0.5)
+             .attr("x2", (d) -> d-pixelW*0.5)
              .attr("fill", "none")
              .attr("stroke", "darkGray")
              .attr("stroke-width", 1)
@@ -300,7 +301,7 @@ drawStepwise = (data) ->
              .attr("stroke-width", "1")
              .attr("r", 3)
              .attr("cy", imgYscale(time))
-             .attr("cx", (d,i) -> imgXscale[d](qtlpos[i])+pixelPer/2)
+             .attr("cx", (d,i) -> imgXscale[d](qtlpos[i])+pixelW/2)
              .style("pointer-events", "none")
     panels[1].selectAll("empty")
              .data(qtlchr)
@@ -322,9 +323,9 @@ drawStepwise = (data) ->
            .enter()
            .append("rect")
            .attr("x", (d) -> imgXscale[d.chr](d.xpos))
-           .attr("width", pixelPer)
+           .attr("width", pixelW)
            .attr("y", (d) -> imgYscale(d.row))
-           .attr("height", pixelPer)
+           .attr("height", pixelH)
            .attr("fill", darkBlue)
            .attr("stroke",  darkBlue)
            .attr("stroke-width", 0)
