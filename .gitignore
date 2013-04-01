@@ -17,3 +17,6 @@ Data/stepwise2.json
 R/*.Rout
 R/perm.RData
 FromIlYoup
+JS/draw_stepwise.js
+JS/draw_stepwise2.js
+JS/lod_allprofiles.js
