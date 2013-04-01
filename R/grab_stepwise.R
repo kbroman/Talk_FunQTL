@@ -78,8 +78,7 @@ for(i in seq(along=qtl)) {
 
 addqtllod <- vector("list", length(times))
 for(i in seq(along=qtl)) {
-  aq <- attr(outsq[[i]], "addqtl")
-  addqtllod[[i]] <- split(aq[,3], aq[,1])
+  addqtllod[[i]] <- attr(outsq[[i]], "addqtl")[,3]
   names(addqtllod[[i]]) <- NULL
 }
 
