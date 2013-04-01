@@ -1,8 +1,9 @@
 # Interactive multiple-QTL results for all time points
 
 # function that does all of the work
-drawLodProfiles = (data) ->
+drawStepwise = (data) ->
   d3.select("p#loading").remove()
+  d3.select("p#loaded").style("opacity", 1)
 
   # no. pixels per rectangle in heatmap
   pixelPer = 1.5 # <- I wanted this to be an integer, but I couldn't fit the figure into a talk
@@ -91,7 +92,7 @@ drawLodProfiles = (data) ->
   console.log("width = #{totalw}, height = #{totalh}")
 
   # create svg
-  svg = d3.select("div#lodprofile_fig")
+  svg = d3.select("div#stepwise_fig")
           .append("svg")
           .attr("height", totalh)
           .attr("width", totalw)

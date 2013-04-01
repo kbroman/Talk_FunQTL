@@ -23,7 +23,7 @@ Data/onetime_random.json: R/spal.RData R/out.RData R/grab_lod_one_time_random.R
 Data/stepwise.json: R/spal.RData R/Analysis/outsq.RData R/grab_stepwise.R R/Analysis/outsq2.RData
 	cd R;R CMD BATCH grab_stepwise.R
 
-js: JS/pheno.js JS/lod_onetime.js JS/lod_onetime_random.js JS/lod_alltimes.js JS/lod_allprofiles.js JS/draw_stepwise.js JS/draw_stepwise2.js
+js: JS/pheno.js JS/lod_onetime.js JS/lod_onetime_random.js JS/lod_alltimes.js JS/stepwise.js JS/draw_stepwise.js JS/draw_stepwise2.js
 
 JS/pheno.js: Coffee/pheno.coffee
 	coffee -co JS Coffee/pheno.coffee
@@ -37,8 +37,8 @@ JS/lod_onetime_random.js: Coffee/lod_onetime_random.coffee Data/onetime_random.j
 JS/lod_alltimes.js: Coffee/lod_alltimes.coffee
 	coffee -co JS Coffee/lod_alltimes.coffee
 
-JS/lod_allprofiles.js: Coffee/lod_allprofiles.coffee
-	coffee -bco JS Coffee/lod_allprofiles.coffee
+JS/stepwise.js: Coffee/stepwise.coffee
+	coffee -bco JS Coffee/stepwise.coffee
 
 JS/draw_stepwise.js: Coffee/draw_stepwise.coffee
 	coffee -co JS Coffee/draw_stepwise.coffee

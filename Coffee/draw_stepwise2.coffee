@@ -1,2 +1,2 @@
 
-d3.json("Data/stepwise2.json", drawLodProfiles)
+d3.json("Data/stepwise2.json", drawStepwise)
