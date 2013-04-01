@@ -3,7 +3,7 @@ mainstuff: js presentation.html Figs/riself.png Figs/geno_pheno.png Figs/perm_hi
 presentation.html: index.html js css/kbroman_talk.css css/kbroman_presentation.css
 	Perl/create_presentation.pl
 
-data: Data/pheno.json Data/onetime.json Data/onetime_random.json Data/stepwise.json
+data: Data/pheno.json Data/onetime.json Data/onetime_random.json Data/stepwise.json Data/all_lod.json
 
 R/spal.RData: R/prep_rep1_data.R RawData/rep1_rev.csv
 	cd R;R CMD BATCH prep_rep1_data.R
@@ -19,6 +19,9 @@ Data/onetime.json: R/spal.RData R/out.RData R/grab_lod_one_time.R
 
 Data/onetime_random.json: R/spal.RData R/out.RData R/grab_lod_one_time_random.R
 	cd R;R CMD BATCH grab_lod_one_time_random.R
+
+Data/all_lod.json: R/spal.RData R/out.RData R/grab_all_lod.R
+	cd R;R CMD BATCH grab_all_lod.R
 
 Data/stepwise.json: R/spal.RData R/Analysis/outsq.RData R/grab_stepwise.R R/Analysis/outsq2.RData
 	cd R;R CMD BATCH grab_stepwise.R
