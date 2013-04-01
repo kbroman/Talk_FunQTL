@@ -83,3 +83,7 @@ webfig:
 web: webhtml webcss webcode webfig webdata
 
 all: js web presentation.html
+
+tar:	mainstuff
+	cd ..;tar czvf FunQTL.tgz FunQTL/*.html FunQTL/Coffee/*.coffee FunQTL/JS/*.js FunQTL/Figs/* FunQTL/Data/*.json FunQTL/CSS/*.css FunQTL/Movie/
+
