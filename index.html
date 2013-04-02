@@ -108,7 +108,7 @@ href="http://www.daviddeen.com">David Deen</a>.
 
 <section>
 
-<h3>The phenotype</h3>
+<h3>Gravitropism</h3>
 
 <div style="position:absolute;top:312px;left:420px;font-size:20px;">
 <a href="Movie/gmovie.mov" rel="qtposter">
@@ -357,7 +357,7 @@ was painfully slow to refresh.)
 
       </li>
 
-  <li>Fit a model to each individual's curve; <br>treat the coefficients as phenotypes</li>
+  <li>Fit a model to each individual&rsquo;s curve; <br>treat the coefficients as phenotypes</li>
 </ul>
 
 
@@ -368,11 +368,11 @@ The simplest thing is just to treat each time point as a separate
 phenotype.  Or we could do that but that combine the results across
 time points in some way.<br><br>
 
-Alternatively, one could fit a model to each individual's curve and
+Alternatively, one could fit a model to each individual&rsquo;s curve and
 treat the estimated coefficients as phenotypes.  There are a variety
 of fancy versions of this.<br><br>
 
-I'm focusing on the simplest approach: treat each time point
+I&rsquo;m focusing on the simplest approach: treat each time point
 individually, and then combine the results.
 </aside>
 
@@ -436,7 +436,7 @@ consideration of multiple-QTL models.
 
 
 <section>
-<h3>Broman & Speed (2002)</h3>
+<h3>Penalized LOD</h3>
 
 <p class="gray" style="margin-left:125px;margin-top:75px;">Among additive QTL models, maximize</p>
 
@@ -477,7 +477,7 @@ single-QTL scan, derived via a permutation test.
 
 
 <section>
-<h3>Broman & Speed (2002)</h3>
+<h3>Penalized LOD</h3>
 
 <p class="gray" style="margin-left:125px;margin-top:75px;">Among additive QTL models, maximize</p>
 
@@ -553,7 +553,7 @@ We have evidence for a second QTL on chr 3.
 We then do another genome scan, conditional on the selected QTL on chr
 3 and 4.<br><br>
 
-The next-highest peak is on chr 1, but it doesn't meet the threshold,
+The next-highest peak is on chr 1, but it doesn&rsquo;t meet the threshold,
 so we stop.<br><br>
 
 In practice, we use forward selection to a large model (say 10 QTL)
@@ -626,7 +626,7 @@ models from time point to time point.
 
 
 <section>
-<h3>Broman & Speed (2002)<font class="lowlight">, extended</font></h3>
+<h3>Penalized LOD<font class="lowlight">, extended</font></h3>
 
 <p class="gray" style="margin-left:125px;margin-top:75px;">Among additive QTL models, maximize</p>
 
@@ -647,7 +647,7 @@ T = penalties</p>
 
 
 <aside>
-The Broman & Speed idea can be immediately extended to combine the
+The penalized LOD score idea can be immediately extended to combine the
 information across time points by just inserting SLOD or
 MLOD in place of LOD<sub>t</sub>.
 </aside>
@@ -692,7 +692,7 @@ Below are the estimated QTL effects across time.
 </ul>
 
 <aside>
-It's always good to have a summary slide.
+It&rsquo;s always good to have a summary slide.
 </aside>
 
 <p class="pg">21</p></section>
