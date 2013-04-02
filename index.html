@@ -34,7 +34,11 @@
 
 
 <section class="titlepage">
-<h2 class="highlight">QTL mapping for phenotypes measured over time</h2>
+<h2 style="margin-top:-10px;" class="highlight">QTL mapping for phenotypes measured over
+time</h2>
+
+<h3 style="margin-top:-30px;opacity:0;" id="interactive">
+<font class="highlight">and <font class="glow">interactive</font> graphics</font></h3>
 
 <h4><a href="http://www.biostat.wisc.edu/~kbroman">Karl Broman</a></h4>
 <p class="nopadding">Biostatistics &amp; Medical Informatics, University of Wisconsin
@@ -53,6 +57,16 @@ These slides were tested for Safari on a Mac and might look terrible
 in some browsers.  I have a lot more to learn about handling browser
 differences.
 </aside>
+
+<script language="Javascript">
+clicked = 0;
+d3.select("h3#interactive")
+  .on("mouseover", function() { d3.select(this).style("opacity", 1); })
+  .on("mouseout", function() { if(!clicked) d3.select(this).style("opacity", 0); })
+  .on("click", function() {
+      if(clicked) { clicked=0; d3.select(this).style("opacity", 0); }
+      else { clicked=1;  d3.select(this).style("opacity", 1); } });
+</script>
 
 </section>
 
