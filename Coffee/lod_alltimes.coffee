@@ -290,7 +290,7 @@ draw = (data) ->
   ticks = [null, lodYscale.ticks(5),
           pheYscale.ticks(6), effYscale.ticks(6)]
   scale = [null, lodYscale, pheYscale, effYscale]
-  ytitle = [null, "LOD score", "Ave phenotype", "QTL effect (BB - AA)"]
+  ytitle = [null, "LOD score", "Ave phenotype", "QTL effect (CC - LL)"]
   mult = [null, 0.6, 0.8, 0.7]
   for i in [1..3]
     panels[i].selectAll("empty")
@@ -330,7 +330,7 @@ draw = (data) ->
 
   # Label genotypes in phenotype panel
   panels[2].selectAll("empty")
-           .data(["AA","BB"])
+           .data(["LL","CC"])
            .enter()
            .append("text")
            .text((d) -> d)

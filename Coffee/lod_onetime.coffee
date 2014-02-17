@@ -237,7 +237,7 @@ draw = (data) ->
       .append("text")
       .attr("x", (d) -> effxScale(d))
       .attr("y", pad.top+h+pad.bottom*0.15)
-      .text((d) -> ["AA", "BB"][d-1])
+      .text((d) -> ["LL", "CC"][d-1])
       .attr("fill", labelcolor)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "hanging")
