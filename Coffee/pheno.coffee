@@ -108,9 +108,9 @@ draw = (data) ->
     colorseq[i] /= n_colors
   redblue = []
   for i in colorseq
-    redblue.push(d3.interpolateRgb("#b2182b", "#f7f7f7")(i))
+    redblue.push(d3.interpolateRgb("#2166ac", "#f7f7f7")(i))
   for i in colorseq[1..]
-    redblue.push(d3.interpolateRgb("#f7f7f7", "#2166ac")(i))
+    redblue.push(d3.interpolateRgb("#f7f7f7", "#b2182b")(i))
 
   zScaleImg = d3.scale.quantile() # controls opacity
                 .domain([-45 - dif, -45 + dif])
